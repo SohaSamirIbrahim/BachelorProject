@@ -1,0 +1,5 @@
+.rasa/cache/*
+tests/
+models/
+actions/__pycache__/
+endpoints.yml
