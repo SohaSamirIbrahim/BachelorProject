@@ -1,0 +1,71 @@
+version: "3.1"
+
+actions:
+  - action_hello_world
+
+entities:
+  - change 
+  - name
+
+slots:
+  change: 
+    type: text 
+    mappings:
+      - type: from_entity
+        entity: change
+  name:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: name
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - start
+
+responses:
+  utter_default:
+  - text: "Sorry, Didn’t understand. Please say again"  
+  
+  utter_ask_rephrase:
+  - text: "I'm sorry, I didn't quite understand that. Could you rephrase?"
+  - text: "I'm sorry I didn't catch that. Could you rephrase please?"
+
+  utter_start:
+  - text: "I noticed there was a change in your {change} is everything okay?"
+  - text: "Your {change} changed, is everything okay?"
+
+  utter_greet:
+  - text: "Hey {name}! How are you?"
+  - text: "Hi {name}! How are you doing?"
+  - text: "Hello there! How are you today?"
+
+  utter_cheer_up:
+  - text: "Here is something to cheer you up:"
+    image: "https://i.imgur.com/nGF1K8f.jpg"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Bye"
+  - text: "See you soon!"
+
+  utter_iamabot:
+  - text: "I am a bot here to help you."
+
+  utter_helpingbot:
+  - text: "By being there for you whenever you need."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
