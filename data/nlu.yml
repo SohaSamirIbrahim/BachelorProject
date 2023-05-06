@@ -1,13 +1,10 @@
 version: "3.1"
-
 nlu:
 - intent: start
   examples: |
     - hey
-  
 - intent: greet
   examples: |
-    - hey
     - hello
     - hi
     - hello there
@@ -20,7 +17,6 @@ nlu:
     - goodevening
     - good afternoon
     - morning
-
 - intent: goodbye
   examples: |
     - good bye
@@ -31,9 +27,7 @@ nlu:
     - have a nice day
     - see you around
     - bye bye
-    - see you later
     - see you
-
 - intent: affirm
   examples: |
     - yes
@@ -41,7 +35,20 @@ nlu:
     - of course
     - that sounds good
     - correct
-
+    - fine
+    - yeah
+    - yup
+    - sure
+    - this is normal
+    - yes it is
+    - yes it is normal
+    - normal
+- intent: everythingFine
+  examples: |
+    - everything is fine
+    - fine
+    - everything's good
+    - i'm okay
 - intent: deny
   examples: |
     - no
@@ -67,6 +74,8 @@ nlu:
     - so so perfect
     - so good
     - so perfect
+    - I have been feeling good
+    - been good
 
 - intent: mood_unhappy
   examples: |
@@ -84,6 +93,27 @@ nlu:
     - extremly sad
     - so saad
     - so sad
+    - i have been feeling very sad
+    - emotional
+    - stressed
+    - have been feeling sad
+    - bad
+    - feeling bad
+    - feeling hopeless
+    - hopeless
+    - helpless
+    - worthless
+    - down
+    - feeling down
+    - have been feeling down
+
+# - intent: week
+#   examples: |
+#     - a week
+
+# - intent: less_week
+#   examples: |
+#     - less than a week
 
 - intent: bot_challenge
   examples: |
@@ -94,8 +124,7 @@ nlu:
     - who are you?
     - what is your name?
     - are you bot?
+    - are you human?
+    - who am i talking to?
+    - are you a person?
 
-
-- intent: question_bot
-  examples: |
-    - help me how?

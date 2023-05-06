@@ -1,5 +1,20 @@
+
+endpoints.yml
+actions/__init__.py
+credentials.yml
+
+## rasa cache, results, tests, models, and story graph
+actions/__pycache__/
 .rasa/cache/*
+results/
 tests/
 models/
-actions/__pycache__/
-endpoints.yml
+*.dot
+
+# firebase credentials
+*.json
+
+#exported interactive files
+testdomain.yml
+testnlu.yml
+teststories.yml

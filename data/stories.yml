@@ -2,29 +2,32 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: conversation start
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - intent: start
+  - action: utter_start
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_askchangenormal
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_howLongChange
+  - intent: score1
+  - checkpoint: start_done
 
-- story: sad path 1
+- story: sleep conversation
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+  - slot_was_set:
+    - change: sleep
+  - checkpoint: start_done
+  - action: utter_askSleep
 
-- story: sad path 2
+- story: activity conversation
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+  - slot_was_set:
+    - change: activity
+  - checkpoint: start_done
+  - action: utter_askActivity
+

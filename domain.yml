@@ -1,71 +1,205 @@
-version: "3.1"
+version: '3.1'
 
 actions:
-  - action_hello_world
-
-entities:
-  - change 
-  - name
+# Utterrances
+- utter_start
+- utter_howLongChange
+- utter_askchangenormal
+# Custom Actions
+- action_start
+- action_score1
+- action_score2
+- action_score3
+- action_fetchScore
+- action_default_fallback
 
 slots:
-  change: 
-    type: text 
+  change:
+    type: categorical
+    values:
+      - activity
+      - sleep
+    influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: change
+    - type: custom
+      action: action_start
+
   name:
     type: text
+    influence_conversation: false
     mappings:
-      - type: from_entity
-        entity: name
+    - type: custom
+      action: action_start
+
+  score:
+    type: float
+    influence_conversation: false
+    mappings:
+    - type: custom
+      action: action_start
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-  - start
+- affirm
+- bot_challenge
+- deny
+- everythingFine
+- goodbye
+- greet
+- less_week
+- mood_great
+- mood_unhappy
+- start
+- week
+- score0
+- score1
+- score2
+- score3
+- tired
 
 responses:
-  utter_default:
-  - text: "Sorry, Didn’t understand. Please say again"  
-  
-  utter_ask_rephrase:
-  - text: "I'm sorry, I didn't quite understand that. Could you rephrase?"
-  - text: "I'm sorry I didn't catch that. Could you rephrase please?"
+  utter_fallback:
+  - text: I'm sorry I don't understand, can you please repeat?
 
   utter_start:
-  - text: "I noticed there was a change in your {change} is everything okay?"
-  - text: "Your {change} changed, is everything okay?"
+  - text: I noticed there was a change in your {change} is everything okay?
+
+  utter_askchangenormal:
+  - text: Is this change normal for you?
+
+  utter_howLongChange:
+  - text: How long has this been happening?
+    buttons:
+    - title: less than a week
+      payload: /score0
+    - title: a week
+      payload: /score1
+    - title: 2 weeks
+      payload: /score2
+    - title: more than 2 weeks
+      payload: /score3
+  
+  utter_askMood:
+  - text: What’s your mood been like this past week? Have you been feeling down or sad? #mood_unhappy/affirm or mood_great/deny
+
+  utter_howOftenMood: 
+  - text: How often have you felt like this?
+    buttons:
+    - title: less than half the time
+      payload: /score1
+    - title: more than half the time
+      payload: /score2
+    - title: almost all the time
+      payload: /score3
+  
+  utter_askFuture:
+  - text: How have you been feeling about the future? (optimistic/pessimistic) 
+    buttons:
+    - title: optimistic
+      payload: /score0
+    - title: ocassionaly pessimistic
+      payload: /score1
+    - title: mostly pessimistic
+      payload: /score2
+    - title: extremely pessimistic/ see no hope
+      payload: /score3
+
+  utter_askEnergy:
+  - text: How has your energy been this past week?
+    buttons:
+    - title: no change
+      payload: /score0
+    - title: tired
+      payload: /tired
+
+  utter_askTired:
+  - text: How bad has it been?
+    buttons:
+    - title: tire easily most of the time
+      payload: /score1
+    - title: effort to maintain activity
+      payload: /score2
+    - title: unable to carry activity due to lack of energy
+      payload: /score3
+  
+  utter_askSleep:
+  - text: How many hours on average have you been sleeping in a 24-hour period in the past week, including naps?
+    buttons:
+    - title: 7-8 hours a night
+      payload: /score0
+    - title: 10 hours a day
+      payload: /score1
+    - title: 12 hours a day
+      payload: /score2
+    - title: more than 12 hours a day
+      payload: /score3
+  
+  utter_askSleepTimeNormal: # normal answer deny or affirm
+  - text : Is that the normal amount for you?
+
+  utter_askSleepTrouble:
+  - text: Have you had any trouble falling asleep? # if affirm -> ask how much
+    # buttons:
+    # - title: Yes
+    #   payload: /troubleSleep
+    # - title: No
+    #   payload: /score0
+
+  utter_askSleepTroubleTime:
+  - text: How long on average does it take you to fall asleep?
+    buttons:
+    - title: 30 minutes less than half of the time
+      payload: /score1
+    - title: 30 minutes most of the time
+      payload: /score2
+    - title: more than 60 minutes most of the time
+      payload: /score3
+  
+
+  utter_askSleepWakeup:
+  - text: Have you been waking up in the middle of the night?
+    buttons:
+    - title: No
+      payload: /score0
+    - title: just light sleep
+      payload: /score1
+    - title: at least once a night 
+      payload: /score2
+    - title: more than once a night and stay awake
+      payload: /score3
+
+  utter_askActivity:
+  - text: how was your activity?
+  
 
   utter_greet:
-  - text: "Hey {name}! How are you?"
-  - text: "Hi {name}! How are you doing?"
-  - text: "Hello there! How are you today?"
+  - text: Hey {name}! How are you?
+  - text: Hi {name}! How are you doing?
+  - text: Hello there! How are you today?
 
   utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
+  - text: 'Here is something to cheer you up:'
+    image: https://i.imgur.com/nGF1K8f.jpg
 
   utter_did_that_help:
-  - text: "Did that help you?"
+  - text: Did that help you?
 
-  utter_happy:
-  - text: "Great, carry on!"
+  utter_goodMood:
+  - text: Great, carry on!
+  - text: Good to hear this!
+  - text: Great!
+  - text: Awesome!
+
 
   utter_goodbye:
-  - text: "Bye"
-  - text: "See you soon!"
+  - text: Bye
+  - text: See you soon!
+  - text: Bye Bye
+  - text: Talk to you soon. Take care!
+  - text: Have a great day!
 
   utter_iamabot:
-  - text: "I am a bot here to help you."
-
-  utter_helpingbot:
-  - text: "By being there for you whenever you need."
+  - text: I am a bot here to help you.
 
 session_config:
   session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  carry_over_slots_to_new_session: false
