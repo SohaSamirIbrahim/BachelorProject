@@ -14,26 +14,33 @@ actions:
 - action_default_fallback
 
 slots:
+  sleep: 
+    type: bool
+    influence_conversation: True
+    mappings:
+    - type: custom
+      action: action_start
+
   change:
     type: categorical
     values:
       - activity
       - sleep
-    influence_conversation: false
+    influence_conversation: False
     mappings:
     - type: custom
       action: action_start
 
   name:
     type: text
-    influence_conversation: false
+    influence_conversation: False
     mappings:
     - type: custom
       action: action_start
 
   score:
     type: float
-    influence_conversation: false
+    influence_conversation: False
     mappings:
     - type: custom
       action: action_start
@@ -154,7 +161,7 @@ responses:
     - title: more than 60 minutes most of the time
       payload: /score3
   
-
+ ## MODIFY PHRASING
   utter_askSleepWakeup:
   - text: Have you been waking up in the middle of the night?
     buttons:
@@ -188,7 +195,6 @@ responses:
   - text: Good to hear this!
   - text: Great!
   - text: Awesome!
-
 
   utter_goodbye:
   - text: Bye

@@ -20,7 +20,6 @@ def newDoc (senderid, doc):
     doc_ref = collection_ref.document(senderid)
     doc_ref.set(doc)
 
-
 def fetchDoc(senderid):
     db = firestore.client()
     doc_ref = db.collection("test").document(senderid)
@@ -65,7 +64,12 @@ class ActionStart(Action):
             slot1= SlotSet("score", score)
             slot2= SlotSet("name", name)
             slot3= SlotSet("change", change)
-            return [slot1,slot2,slot3]
+            if(change == 'sleep'):
+                slot4 = SlotSet("sleep", True)
+            else:
+                slot4 = SlotSet("sleep", False)
+            return [slot1,slot2,slot3,slot4]
+
         else:
             dispatcher.utter_message(text="Sorry an error occured in the server. Try again.")
             return []

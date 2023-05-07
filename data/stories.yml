@@ -2,9 +2,11 @@ version: "3.1"
 
 stories:
 
-- story: conversation start
+- story: conversation sleep
   steps:
   - intent: start
+  - slot_was_set:
+    - sleep: true
   - action: utter_start
   - or:
     - intent: affirm
@@ -14,20 +16,56 @@ stories:
     - intent: affirm
     - intent: deny
   - action: utter_howLongChange
+  - checkpoint: change_score
+
+- story: conversation activity
+  steps:
+  - intent: start
+  - slot_was_set:
+    - sleep: false
+  - action: utter_start
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_askchangenormal
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_howLongChange
+  - checkpoint: change_score
+
+- story: activity
+  steps:
+    - checkpoint: change_scoreDone
+    - slot_was_set:
+      - sleep: false
+    - action: utter_askActivity
+    - checkpoint: change_score
+
+- story: sleep
+  steps:
+    - checkpoint: change_scoreDone
+    - slot_was_set:
+      - sleep: true
+    - action: utter_askSleep
+
+- story: score1
+  steps:
+  - checkpoint: change_score
   - intent: score1
-  - checkpoint: start_done
+  - action: action_score1
+  - checkpoint: change_scoreDone
 
-- story: sleep conversation
+- story: score2
   steps:
-  - slot_was_set:
-    - change: sleep
-  - checkpoint: start_done
-  - action: utter_askSleep
+  - checkpoint: change_score
+  - intent: score2
+  - action: action_score2
+  - checkpoint: change_scoreDone
 
-- story: activity conversation
+- story: score3
   steps:
-  - slot_was_set:
-    - change: activity
-  - checkpoint: start_done
-  - action: utter_askActivity
-
+  - checkpoint: change_score
+  - intent: score3
+  - action: action_score3
+  - checkpoint: change_scoreDone
