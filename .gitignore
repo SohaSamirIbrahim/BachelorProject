@@ -11,7 +11,8 @@ tests/
 models/
 *.dot
 
-# firebase credentials
+# firebase credentials and env
+.env
 *.json
 
 #exported interactive files

@@ -14,6 +14,11 @@ from rasa_sdk.events import SlotSet
 import firebase_admin
 from firebase_admin import firestore
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 def newDoc (senderid, doc):
     db = firestore.client()
     collection_ref = db.collection('test')
@@ -54,7 +59,8 @@ class ActionStart(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        id = tracker.sender_id
+        # id = tracker.sender_id
+        id = os.environ.get("TestID")
         data = fetchDoc(id)
 
         if(data) :
@@ -84,7 +90,7 @@ class ActionScore1(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        id = tracker.sender_id
+        id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             updateDoc(id, "score" , data.get("score") +1)
@@ -101,7 +107,7 @@ class ActionScore2(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        id = tracker.sender_id
+        id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             updateDoc(id, "score" , data.get("score") +2)
@@ -118,7 +124,7 @@ class ActionScore3(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        id = tracker.sender_id
+        id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             updateDoc(id, "score" , data.get("score") +3)
@@ -136,7 +142,7 @@ class ActionFetchScore(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        id = tracker.sender_id
+        id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             dispatcher.utter_message(f'Score is {data.get("score")}')

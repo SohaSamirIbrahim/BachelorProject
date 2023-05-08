@@ -73,6 +73,7 @@ responses:
   utter_askchangenormal:
   - text: Is this change normal for you?
 
+  # GENERAL
   utter_howLongChange:
   - text: How long has this been happening?
     buttons:
@@ -85,8 +86,9 @@ responses:
     - title: more than 2 weeks
       payload: /score3
   
+  #mood_unhappy/affirm or mood_great/deny
   utter_askMood:
-  - text: What’s your mood been like this past week? Have you been feeling down or sad? #mood_unhappy/affirm or mood_great/deny
+  - text: What’s your mood been like this past week? Have you been feeling down or sad? 
 
   utter_howOftenMood: 
   - text: How often have you felt like this?
@@ -110,6 +112,7 @@ responses:
     - title: extremely pessimistic/ see no hope
       payload: /score3
 
+# make not button response  
   utter_askEnergy:
   - text: How has your energy been this past week?
     buttons:
@@ -127,7 +130,108 @@ responses:
       payload: /score2
     - title: unable to carry activity due to lack of energy
       payload: /score3
+
+  utter_askWeight:
+  - text: Has your weight changed within the last two weeks?
+  # affirm or deny/ weight changed/weightdidnt
+
+  utter_askWeightIncOrDec:
+  - text: How has your weight changed? Did it increase or decrease?
+
+  utter_askWeightDec:
+  - text: How much weight have you lost in the last two weeks?
+    buttons:
+    - title: Slight weight loss
+      payload: /score1
+    - title: Lost 1Kg or more
+      payload: /score2
+    - title: Lost more than 4Kg
+      payload: /score3
+
+  utter_askWeightInc:
+  - text: How much weight have you gained in the last two weeks?
+    buttons:
+    - title: Slight weight gain
+      payload: /score1
+    - title: Gained 1Kg or more
+      payload: /score2
+    - title: Gained more than 4Kg
+      payload: /score3
+
+  utter_askAppetite:
+  - text: Compared to your usual appetite have you noticed any appetite change in the last two weeks?
+  # deny or affirm/ appetite change or didnt
+
+  utter_askAppetiteIncOrDec:
+  - text: How has your appetite changed? Do you feel it has increased or decreased?
+  # inc/dec
+
+  utter_askAppetiteDec:
+  - text: How much less is your appetite comapred to normal?
+    buttons:
+    - title: Eat less amounts or less often than usual
+      payload: /score1
+    - title: Eat much less than normal and with personal effort
+      payload: /score2
+    - title: Rarely eat
+      payload: /score3
+
+  utter_askAppetiteInc:
+  - text: How much has your appetite increased comapred to normal?
+    buttons:
+    - title: Eat more frequently than normal
+      payload: /score1
+    - title: Regularly eat more often with greater amounts of food than usual
+      payload: /score2
+    - title: Overeat both at mealtime and between meals
+      payload: /score3
+
+  utter_askAnxious:
+  - text: Have you been feeling anxious, nervous or on edge more than usual in the past week?
+  # affirm/deny or anxious/notanxious
+
+  utter_askAnxiousTime:
+  - text: Approximately how much of the time the last week have you been feeling anxious?
+    buttons:
+    - title: less than half the time
+      payload: /score1
+    - title: more than half the time
+      payload: /score2
+    - title:  extremely anxious virtually all of the time
+      payload: /score3
+
+  utter_askIrritable:
+  - text:  Have you found yourself becoming angry more so than normal?
+  # affirm/deny or irritable/notirritable
+
+  utter_askIrritableTime:
+  - text: How much of the time in the past week have you been feeling especially irritable?
+    buttons:
+    - title: less than half the time
+      payload: /score1
+    - title: more than half the time
+      payload: /score2
+    - title:  extremely irritable virtually all of the time
+      payload: /score3
   
+  utter_askSlowedDown:
+  - text: Have you felt slowed down in your thinking, speaking, or movement in the past week?
+  # affirm/deny or slowes/notslowed
+
+  utter_askSlowedDownSeverity:
+  - text: How would you describe being slowed down as?
+    buttons:
+    - title: Slowed thinking
+      payload: /score1
+    - title: Take several seconds to respond to most questions
+      payload: /score2
+    - title: Largely unresponsive to most questions
+      payload: /score3
+
+  # END GENERAL
+  
+
+  # SLEEP
   utter_askSleep:
   - text: How many hours on average have you been sleeping in a 24-hour period in the past week, including naps?
     buttons:
@@ -173,9 +277,70 @@ responses:
       payload: /score2
     - title: more than once a night and stay awake
       payload: /score3
+  #END SLEEP
 
+
+  # ACTIVITY
   utter_askActivity:
-  - text: how was your activity?
+  - text: Have you participated in any enjoyable activities this past week?
+  # answer affirm/yes participate -> score0 
+  # answers no ask enjoy
+
+  utter_askActivityEnjoy:
+  - text: In the past week on how many occasions have you enjoyed any activity?
+    buttons:
+    - title: rarely
+      payload: /score0
+    - title: just light sleep
+      payload: /score1
+    - title: at least once a night 
+      payload: /score2
+
+  # utter_askInterest:
+  # - text: Have you noticed any change in your level of interest and motivation for completing daily activities?
+
+  utter_askInterest:
+  - text: How would you describe your level of interest and motivation to complete daily activities?
+    buttons:
+    - title: No change from usual
+      payload: /score0
+    - title: Reduction in former interests/activities
+      payload: /score1
+    - title: Only one or two former interests remain 
+      payload: /score2
+    - title: No interest in formerly pursued activities
+      payload: /score3
+
+  utter_askConcentration:
+  - text : In the past week were you able to concentrate on what you were doing and make minor decisions?
+    buttons:
+    - title: Yes was able
+      payload: /score0
+    - title: Attention wanders occasionally
+      payload: /score1
+    - title: Struggle to focus or make a decision 
+      payload: /score2
+    - title: Cannot concentrate well enough to read or cannot make even minor decisions
+      payload: /score3
+
+  utter_askPhysicalEnergy:
+  - text: During the past week, have you had feelings of being weighted down, like you had weights on your arms and legs?
+  # affirm/deny or leaden/notleaden
+
+  utter_askPhysicalEnergyInterfere:
+  - text: Does the feeling of being weighted down interfere with your daily activities ? 
+  # if no -> score1
+  # affirm/deny or interfere/doesnt
+
+  utter_askPhysicalEnergyTime:
+  - text: How much of the time have you felt weighted down in the past week?
+    - title: More than half the time 
+      payload: /score2
+    - title: Virtually all the time, several hours per day
+      payload: /score3
+ 
+
+  # END ACTIVITY
   
 
   utter_greet:
