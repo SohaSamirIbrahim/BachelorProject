@@ -9,7 +9,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, Restarted, UserUtteranceReverted
 
 import firebase_admin
 from firebase_admin import firestore
@@ -38,6 +38,18 @@ def updateDoc(senderid, field, value):
     doc_ref = db.collection("test").document(senderid)
     doc_ref.update({field: value})
 
+class ActionRestart(Action):
+
+  def name(self) -> Text:
+      return "action_restart"
+
+  async def run(self, dispatcher, 
+            tracker: Tracker, 
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        dispatcher.utter_message("Conversation was restarted.")
+        return [Restarted()]
+
 class CustomFallbackAction(Action):
     def name(self) -> Text:
         return "action_default_fallback"
@@ -47,9 +59,8 @@ class CustomFallbackAction(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         dispatcher.utter_message("I'm sorry, I didn't understand. Can you please rephrase your message?")
-        return []
+        return [UserUtteranceReverted()]
     
-
 class ActionStart(Action):
 
     def name(self) -> Text:
@@ -74,65 +85,39 @@ class ActionStart(Action):
                 slot4 = SlotSet("sleep", True)
             else:
                 slot4 = SlotSet("sleep", False)
-            return [slot1,slot2,slot3,slot4]
+            return [slot1,slot2,slot3,slot4, ]
 
         else:
             dispatcher.utter_message(text="Sorry an error occured in the server. Try again.")
             return []
+        
+class ActionScoreAdd(Action):
+    def name(self) -> Text:
+        return "action_scoreAdd"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        id = os.environ.get("TestID")
+        value = tracker.get_slot("value")
+        if (value == 0):
+            return[] 
+        data = fetchDoc(id)
+        if (data):
+            if(value == 1):
+                updateDoc(id, "score" , data.get("score") +1)
+            if(value == 2):
+                updateDoc(id, "score" , data.get("score") +2)
+            if(value == 3):
+                updateDoc(id, "score" , data.get("score") +3)
+
+        else:
+            dispatcher.utter_message("Error")
+        
+        slot = SlotSet("value", 0)
+        return [slot]
     
-
-class ActionScore1(Action):
-
-    def name(self) -> Text:
-        return "action_score1"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        id = os.environ.get("TestID")
-        data = fetchDoc(id)
-        if (data):
-            updateDoc(id, "score" , data.get("score") +1)
-        else:
-            dispatcher.utter_message("Error")
-        
-        return []
-    
-class ActionScore2(Action):
-    def name(self) -> Text:
-        return "action_score2"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        id = os.environ.get("TestID")
-        data = fetchDoc(id)
-        if (data):
-            updateDoc(id, "score" , data.get("score") +2)
-        else:
-            dispatcher.utter_message("Error")
-        
-        return []
-
-class ActionScore3(Action):
-    def name(self) -> Text:
-        return "action_score3"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        id = os.environ.get("TestID")
-        data = fetchDoc(id)
-        if (data):
-            updateDoc(id, "score" , data.get("score") +3)
-        else:
-            dispatcher.utter_message("Error")
-        
-        
-        return []
     
 class ActionFetchScore(Action):
     def name(self) -> Text:

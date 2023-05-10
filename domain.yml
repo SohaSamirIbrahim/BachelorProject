@@ -5,13 +5,17 @@ actions:
 - utter_start
 - utter_howLongChange
 - utter_askchangenormal
+- utter_askSleep
+- utter_askSleepTrouble
 # Custom Actions
+- action_restart
 - action_start
-- action_score1
-- action_score2
-- action_score3
+- action_scoreAdd
 - action_fetchScore
 - action_default_fallback
+
+entities:
+  - value
 
 slots:
   sleep: 
@@ -45,6 +49,13 @@ slots:
     - type: custom
       action: action_start
 
+  value:
+    type: float
+    influence_conversation: False
+    mappings:
+    - type: from_entity
+      entity: value
+
 intents:
 - affirm
 - bot_challenge
@@ -52,21 +63,16 @@ intents:
 - everythingFine
 - goodbye
 - greet
-- less_week
 - mood_great
 - mood_unhappy
 - start
-- week
-- score0
-- score1
-- score2
-- score3
+- score
 - tired
 
 responses:
-  utter_fallback:
-  - text: I'm sorry I don't understand, can you please repeat?
-
+  utter_restart:
+  - text: Conversation restarted
+  
   utter_start:
   - text: I noticed there was a change in your {change} is everything okay?
 
@@ -78,13 +84,13 @@ responses:
   - text: How long has this been happening?
     buttons:
     - title: less than a week
-      payload: /score0
+      payload: /score{{"value":0}}
     - title: a week
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: 2 weeks
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: more than 2 weeks
-      payload: /score3
+      payload: /score{{"value":3}}
   
   #mood_unhappy/affirm or mood_great/deny
   utter_askMood:
@@ -94,30 +100,30 @@ responses:
   - text: How often have you felt like this?
     buttons:
     - title: less than half the time
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: more than half the time
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: almost all the time
-      payload: /score3
+      payload: /score{{"value":3}}
   
   utter_askFuture:
   - text: How have you been feeling about the future? (optimistic/pessimistic) 
     buttons:
     - title: optimistic
-      payload: /score0
+      payload: /score{{"value":0}}
     - title: ocassionaly pessimistic
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: mostly pessimistic
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: extremely pessimistic/ see no hope
-      payload: /score3
+      payload: /score{{"value":3}}
 
 # make not button response  
   utter_askEnergy:
   - text: How has your energy been this past week?
     buttons:
     - title: no change
-      payload: /score0
+      payload: /score{{"value":0}}
     - title: tired
       payload: /tired
 
@@ -125,11 +131,11 @@ responses:
   - text: How bad has it been?
     buttons:
     - title: tire easily most of the time
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: effort to maintain activity
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: unable to carry activity due to lack of energy
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askWeight:
   - text: Has your weight changed within the last two weeks?
@@ -142,21 +148,21 @@ responses:
   - text: How much weight have you lost in the last two weeks?
     buttons:
     - title: Slight weight loss
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: Lost 1Kg or more
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: Lost more than 4Kg
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askWeightInc:
   - text: How much weight have you gained in the last two weeks?
     buttons:
     - title: Slight weight gain
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: Gained 1Kg or more
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: Gained more than 4Kg
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askAppetite:
   - text: Compared to your usual appetite have you noticed any appetite change in the last two weeks?
@@ -170,21 +176,21 @@ responses:
   - text: How much less is your appetite comapred to normal?
     buttons:
     - title: Eat less amounts or less often than usual
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: Eat much less than normal and with personal effort
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: Rarely eat
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askAppetiteInc:
   - text: How much has your appetite increased comapred to normal?
     buttons:
     - title: Eat more frequently than normal
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: Regularly eat more often with greater amounts of food than usual
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: Overeat both at mealtime and between meals
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askAnxious:
   - text: Have you been feeling anxious, nervous or on edge more than usual in the past week?
@@ -194,11 +200,11 @@ responses:
   - text: Approximately how much of the time the last week have you been feeling anxious?
     buttons:
     - title: less than half the time
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: more than half the time
-      payload: /score2
+      payload: /score{{"value":2}}
     - title:  extremely anxious virtually all of the time
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askIrritable:
   - text:  Have you found yourself becoming angry more so than normal?
@@ -208,11 +214,11 @@ responses:
   - text: How much of the time in the past week have you been feeling especially irritable?
     buttons:
     - title: less than half the time
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: more than half the time
-      payload: /score2
+      payload: /score{{"value":2}}
     - title:  extremely irritable virtually all of the time
-      payload: /score3
+      payload: /score{{"value":3}}
   
   utter_askSlowedDown:
   - text: Have you felt slowed down in your thinking, speaking, or movement in the past week?
@@ -222,11 +228,11 @@ responses:
   - text: How would you describe being slowed down as?
     buttons:
     - title: Slowed thinking
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: Take several seconds to respond to most questions
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: Largely unresponsive to most questions
-      payload: /score3
+      payload: /score{{"value":3}}
 
   # END GENERAL
   
@@ -236,47 +242,47 @@ responses:
   - text: How many hours on average have you been sleeping in a 24-hour period in the past week, including naps?
     buttons:
     - title: 7-8 hours a night
-      payload: /score0
+      payload: /score{{"value":0}}
     - title: 10 hours a day
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: 12 hours a day
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: more than 12 hours a day
-      payload: /score3
+      payload: /score{{"value":3}}
   
-  utter_askSleepTimeNormal: # normal answer deny or affirm
+  utter_askSleepTimeNormal: # normal answer deny or affirm??
   - text : Is that the normal amount for you?
 
-  utter_askSleepTrouble:
-  - text: Have you had any trouble falling asleep? # if affirm -> ask how much
-    # buttons:
-    # - title: Yes
-    #   payload: /troubleSleep
-    # - title: No
-    #   payload: /score0
+  utter_askSleepTrouble:   # if affirm -> ask how much
+  - text: Have you had any trouble falling asleep? 
+  # buttons:
+  # - title: Yes
+  #   payload: /troubleSleep
+  # - title: No
+  #   payload: /score0
 
   utter_askSleepTroubleTime:
   - text: How long on average does it take you to fall asleep?
     buttons:
     - title: 30 minutes less than half of the time
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: 30 minutes most of the time
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: more than 60 minutes most of the time
-      payload: /score3
+      payload: /score{{"value":3}}
   
  ## MODIFY PHRASING
   utter_askSleepWakeup:
   - text: Have you been waking up in the middle of the night?
     buttons:
     - title: No
-      payload: /score0
+      payload: /score{{"value":0}}
     - title: just light sleep
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: at least once a night 
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: more than once a night and stay awake
-      payload: /score3
+      payload: /score{{"value":3}}
   #END SLEEP
 
 
@@ -287,14 +293,16 @@ responses:
   # answers no ask enjoy
 
   utter_askActivityEnjoy:
-  - text: In the past week on how many occasions have you enjoyed any activity?
+  - text: Compared to your usual, how have you enjoyed these activities?
     buttons:
-    - title: rarely
-      payload: /score0
-    - title: just light sleep
-      payload: /score1
-    - title: at least once a night 
-      payload: /score2
+    - title: No change from usual
+      payload: /score{{"value":0}}
+    - title: Do not feel the same enjoynment as usual
+      payload: /score{{"value":1}}
+    - title: Rarely enjoy an acitvity i once enjoyed
+      payload: /score{{"value":2}}
+    - title: Unable to enjoy any activity done
+      payload: /score{{"value":3}}
 
   # utter_askInterest:
   # - text: Have you noticed any change in your level of interest and motivation for completing daily activities?
@@ -303,25 +311,25 @@ responses:
   - text: How would you describe your level of interest and motivation to complete daily activities?
     buttons:
     - title: No change from usual
-      payload: /score0
+      payload: /score{{"value":0}}
     - title: Reduction in former interests/activities
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: Only one or two former interests remain 
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: No interest in formerly pursued activities
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askConcentration:
   - text : In the past week were you able to concentrate on what you were doing and make minor decisions?
     buttons:
     - title: Yes was able
-      payload: /score0
+      payload: /score{{"value":0}}
     - title: Attention wanders occasionally
-      payload: /score1
+      payload: /score{{"value":1}}
     - title: Struggle to focus or make a decision 
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: Cannot concentrate well enough to read or cannot make even minor decisions
-      payload: /score3
+      payload: /score{{"value":3}}
 
   utter_askPhysicalEnergy:
   - text: During the past week, have you had feelings of being weighted down, like you had weights on your arms and legs?
@@ -334,10 +342,11 @@ responses:
 
   utter_askPhysicalEnergyTime:
   - text: How much of the time have you felt weighted down in the past week?
+    buttons:
     - title: More than half the time 
-      payload: /score2
+      payload: /score{{"value":2}}
     - title: Virtually all the time, several hours per day
-      payload: /score3
+      payload: /score{{"value":3}}
  
 
   # END ACTIVITY

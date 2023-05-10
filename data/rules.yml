@@ -12,49 +12,13 @@ rules:
   - intent: bot_challenge
   - action: utter_iamabot
 
-# - rule: fallback
-#   steps:
-#   - intent: nlu_fallback
-#   - action: utter_fallback
-
-# - rule: start_conversation
-#   steps: 
-#   - intent: start
-#   - action: action_start
-#   - action: utter_start
-
-- rule: add score zero
+- rule: add
   steps:
-  - intent: score0
+  - intent: score
+  - action: action_scoreAdd
   wait_for_user_input: false
 
-
-- rule: add score one
+- rule: restart
   steps:
-  - intent: score1
-  - action: action_score1
-  wait_for_user_input: false
-
-- rule: add score two
-  steps:
-  - intent: score2
-  - action: action_score2
-  wait_for_user_input: false
-
-- rule: add score three
-  steps:
-  - intent: score3
-  - action: action_score3
-  wait_for_user_input: false
-
-- rule: ask change in energy
-  steps:
-  - intent: tired
-  - action: utter_askTired
-
-- rule: ask sleep trouble time
-  steps:
-  - action: utter_askSleepTrouble
-  - intent: affirm
-  - action: utter_askSleepTroubleTime
-
+  - intent: restart
+  - action: action_restart
