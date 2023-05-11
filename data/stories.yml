@@ -2,7 +2,7 @@ version: "3.1"
 
 stories:
 
-- story: conversation sleep
+- story: conversation sleep yes trouble yes wakeup
   steps:
   - intent: start
   - slot_was_set:
@@ -26,5 +26,138 @@ stories:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askSleepTrouble
-  - intent: affirm
+  - or:
+    - intent: troubleSleep
+    - intent: affirm
+    - intent: notSure
   - action: utter_askSleepTroubleTime
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleepWakeup
+  - or:
+    - intent: troubleSleep
+    - intent: affirm 
+    - intent: notSure
+  - action: utter_askSleepWakeupTime
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: action_scoreCheckSleep
+  # check score if higher -> ask general questions
+
+- story: conversation sleep no trouble no wakeup
+  steps:
+  - intent: start
+  - slot_was_set:
+    - sleep: true
+  - action: utter_start
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_askchangenormal
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_howLongChange
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleep
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleepTrouble
+  - or:
+    - intent: noTroubleSleep
+    - intent: deny
+  - action: utter_askSleepWakeup
+  - or:
+    - intent: noTroubleSleep
+    - intent: deny 
+  - action: action_scoreCheckSleep
+  # check score -> probably okay
+  
+- story: conversation sleep yes trouble no wakeup
+  steps:
+  - intent: start
+  - slot_was_set:
+    - sleep: true
+  - action: utter_start
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_askchangenormal
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_howLongChange
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleep
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleepTrouble
+  - or:
+    - intent: troubleSleep
+    - intent: affirm
+    - intent: notSure
+  - action: utter_askSleepTroubleTime
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleepWakeup
+  - or:
+    - intent: noTroubleSleep
+    - intent: deny 
+  - action: action_scoreCheckSleep
+  # check score 
+
+  - story: conversation sleep no trouble yes wakeup
+  steps:
+  - intent: start
+  - slot_was_set:
+    - sleep: true
+  - action: utter_start
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_askchangenormal
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_howLongChange
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleep
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleepTrouble
+  - or:
+    - intent: noTroubleSleep
+    - intent: deny
+  - action: utter_askSleepWakeup
+  - or:
+    - intent: troubleSleep
+    - intent: affirm
+    - intent: notSure 
+  - action: utter_askSleepWakeupTime
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: action_scoreCheckSleep
+  # check score

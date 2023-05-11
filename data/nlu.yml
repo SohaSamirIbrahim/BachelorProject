@@ -31,6 +31,7 @@ nlu:
     - see you around
     - bye bye
     - see you
+
 - intent: affirm
   examples: |
     - yes
@@ -46,12 +47,45 @@ nlu:
     - yes it is
     - yes it is normal
     - normal
+    - a little
+    - sometimes
+    - y
+    - i do
+    - i think so
+    - happens
+    - happens sometimes
+    - maybe
+
+- intent: troubleSleep
+  examples: |
+    - i do have trouble falling asleep
+    - yes i have trouble falling asleep
+    - i do have trouble
+    - i have trouble sometimes
+    - i do wakeup sometimes
+    - yes i wakeup in the middle of the night
+    - i do wakeup
+    - i wakeup sometimes
+    - i wakeup
+    - i have trouble sleeping
+    - i wakeup alot
+    
+  
+- intent: noTroubleSleep
+  examples: |
+    - i don't have trouble no
+    - no i don't have trouble
+    - no trouble
+    - all good
+
+
 - intent: everythingFine
   examples: |
     - everything is fine
     - fine
     - everything's good
     - i'm okay
+
 - intent: deny
   examples: |
     - no
@@ -60,7 +94,34 @@ nlu:
     - don't like that
     - no way
     - not really
+    - n
+    - not much 
+    - no i don't
+    - no i do not
+    - i do not
+    - don't
+    - i don't
+    - nope
+    - nah
+    - none
+    - nothing 
 
+- intent: notSure:
+  examples: |
+    - i don't know
+    - no idea
+    - dunno
+    - donno
+    - not sure
+    - i am not sure
+    - i'm not sure
+    - can't decide
+    - cannot know
+    - cannot decide
+    - no clue
+    - i don't have a clue
+    - i have no clue
+  
 - intent: mood_great
   examples: |
     - perfect

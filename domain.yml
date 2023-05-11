@@ -11,7 +11,7 @@ actions:
 - action_restart
 - action_start
 - action_scoreAdd
-- action_fetchScore
+- action_scoreCheckSleep
 - action_default_fallback
 
 entities:
@@ -68,6 +68,9 @@ intents:
 - start
 - score
 - tired
+- troubleSleep
+- notSure
+- noTroubleSleep
 
 responses:
   utter_restart:
@@ -234,6 +237,18 @@ responses:
     - title: Largely unresponsive to most questions
       payload: /score{{"value":3}}
 
+  utter_askConcentration:
+  - text : In the past week were you able to concentrate on what you were doing and make minor decisions?
+    buttons:
+    - title: Yes was able
+      payload: /score{{"value":0}}
+    - title: Attention wanders occasionally
+      payload: /score{{"value":1}}
+    - title: Struggle to focus or make a decision 
+      payload: /score{{"value":2}}
+    - title: Cannot concentrate well enough to read or cannot make even minor decisions
+      payload: /score{{"value":3}}
+
   # END GENERAL
   
 
@@ -250,16 +265,8 @@ responses:
     - title: more than 12 hours a day
       payload: /score{{"value":3}}
   
-  utter_askSleepTimeNormal: # normal answer deny or affirm??
-  - text : Is that the normal amount for you?
-
-  utter_askSleepTrouble:   # if affirm -> ask how much
+  utter_askSleepTrouble:
   - text: Have you had any trouble falling asleep? 
-  # buttons:
-  # - title: Yes
-  #   payload: /troubleSleep
-  # - title: No
-  #   payload: /score0
 
   utter_askSleepTroubleTime:
   - text: How long on average does it take you to fall asleep?
@@ -274,9 +281,10 @@ responses:
  ## MODIFY PHRASING
   utter_askSleepWakeup:
   - text: Have you been waking up in the middle of the night?
+
+  utter_askSleepWakeupTime:
+  - text: How often do you wakeup?
     buttons:
-    - title: No
-      payload: /score{{"value":0}}
     - title: just light sleep
       payload: /score{{"value":1}}
     - title: at least once a night 
@@ -289,8 +297,6 @@ responses:
   # ACTIVITY
   utter_askActivity:
   - text: Have you participated in any enjoyable activities this past week?
-  # answer affirm/yes participate -> score0 
-  # answers no ask enjoy
 
   utter_askActivityEnjoy:
   - text: Compared to your usual, how have you enjoyed these activities?
@@ -317,18 +323,6 @@ responses:
     - title: Only one or two former interests remain 
       payload: /score{{"value":2}}
     - title: No interest in formerly pursued activities
-      payload: /score{{"value":3}}
-
-  utter_askConcentration:
-  - text : In the past week were you able to concentrate on what you were doing and make minor decisions?
-    buttons:
-    - title: Yes was able
-      payload: /score{{"value":0}}
-    - title: Attention wanders occasionally
-      payload: /score{{"value":1}}
-    - title: Struggle to focus or make a decision 
-      payload: /score{{"value":2}}
-    - title: Cannot concentrate well enough to read or cannot make even minor decisions
       payload: /score{{"value":3}}
 
   utter_askPhysicalEnergy:

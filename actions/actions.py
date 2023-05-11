@@ -85,7 +85,7 @@ class ActionStart(Action):
                 slot4 = SlotSet("sleep", True)
             else:
                 slot4 = SlotSet("sleep", False)
-            return [slot1,slot2,slot3,slot4, ]
+            return [slot1,slot2,slot3,slot4]
 
         else:
             dispatcher.utter_message(text="Sorry an error occured in the server. Try again.")
@@ -119,9 +119,9 @@ class ActionScoreAdd(Action):
         return [slot]
     
     
-class ActionFetchScore(Action):
+class ActionScoreCheckSleep(Action):
     def name(self) -> Text:
-        return "action_fetchScore"
+        return "action_scoreCheckSleep"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -130,7 +130,8 @@ class ActionFetchScore(Action):
         id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
-            dispatcher.utter_message(f'Score is {data.get("score")}')
+            slot = data.get("score")
+            # check if score> 3 send intent to ask general questions other wise say bye
         else:
             dispatcher.utter_message("Error")
         
