@@ -9,7 +9,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, Restarted, UserUtteranceReverted
+from rasa_sdk.events import SlotSet, Restarted, UserUtteranceReverted, UserUttered
 
 import firebase_admin
 from firebase_admin import firestore
@@ -119,9 +119,9 @@ class ActionScoreAdd(Action):
         return [slot]
     
     
-class ActionScoreCheckSleep(Action):
+class ActionScoreCheck(Action):
     def name(self) -> Text:
-        return "action_scoreCheckSleep"
+        return "action_scoreCheck"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
@@ -131,6 +131,10 @@ class ActionScoreCheckSleep(Action):
         data = fetchDoc(id)
         if (data):
             slot = data.get("score")
+            if(slot> 3):
+                return [UserUttered('/general', intent={'name': 'general', 'confidence': 1.0})]
+            else:
+                return [UserUttered('/goodbye', intent={'name': 'goodbye', 'confidence': 1.0})]
             # check if score> 3 send intent to ask general questions other wise say bye
         else:
             dispatcher.utter_message("Error")

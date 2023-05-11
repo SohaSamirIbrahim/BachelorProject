@@ -22,3 +22,13 @@ rules:
   steps:
   - intent: restart
   - action: action_restart
+
+- rule: custom
+  steps:
+  - intent: check
+  - action: action_scoreCheck
+
+- rule: trigger
+  steps:
+  - intent: general
+  - action: utter_askMood

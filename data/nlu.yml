@@ -1,11 +1,17 @@
 version: "3.1"
 nlu:
+- intent: check
+  examples: |
+    - check
+
 - intent: restart
   examples: |
     - restart
+
 - intent: start
   examples: |
     - hey
+
 - intent: greet
   examples: |
     - hello
@@ -20,6 +26,7 @@ nlu:
     - goodevening
     - good afternoon
     - morning
+
 - intent: goodbye
   examples: |
     - good bye
@@ -55,6 +62,33 @@ nlu:
     - happens
     - happens sometimes
     - maybe
+    - a few times
+    - few times
+    - yes i have
+    - yes i do
+    - i have
+    - i did
+    - a couple times
+    - yes i do feel that 
+    - yes i have felt that
+    - i do feel that way
+    - i do feel that
+    - have felt that
+    - felt that alot
+    - feel it always
+    - a lot
+    - yes it happens
+    - happens a lot
+    - always
+    - all the time
+    - almost all the time
+    - yes every time
+    - every time
+    - i always feel that way
+    - i do feel like that
+    - felt it yes
+    - happens yes
+    - yes it does interfere
 
 - intent: troubleSleep
   examples: |
@@ -69,15 +103,13 @@ nlu:
     - i wakeup
     - i have trouble sleeping
     - i wakeup alot
-    
-  
+
 - intent: noTroubleSleep
   examples: |
     - i don't have trouble no
     - no i don't have trouble
     - no trouble
     - all good
-
 
 - intent: everythingFine
   examples: |
@@ -104,9 +136,23 @@ nlu:
     - nope
     - nah
     - none
-    - nothing 
+    - nothing
+    - didn't
+    - i haven't
+    - haven't
+    - no i haven't
+    - no i have not
+    - didn't happen
+    - didn't occur
+    - haven't felt it
+    - i don't feel that
+    - never happens
+    - doesn't happen
+    - no it doesn't
+    - doesn't
+    - does not
 
-- intent: notSure:
+- intent: notSure
   examples: |
     - i don't know
     - no idea
@@ -121,7 +167,24 @@ nlu:
     - no clue
     - i don't have a clue
     - i have no clue
-  
+
+- intent: reasonActivity
+  examples: |
+    - tired
+    - no interest
+    - didn't want to
+    - don't want to
+    - not in the mood
+    - wasn't interested
+    - wasn't in the mood
+    - wasn't in the mood to do so
+    - don't want to go out
+    - work
+    - i had work
+    - i was tired
+    - emotionally tired
+    - don't want to see people
+    
 - intent: mood_great
   examples: |
     - perfect

@@ -45,7 +45,7 @@ stories:
     entities:
       - value: 1  
   - action: action_scoreAdd
-  - action: action_scoreCheckSleep
+  # - action: action_scoreCheck
   # check score if higher -> ask general questions
 
 - story: conversation sleep no trouble no wakeup
@@ -79,7 +79,7 @@ stories:
   - or:
     - intent: noTroubleSleep
     - intent: deny 
-  - action: action_scoreCheckSleep
+  # - action: action_scoreCheck
   # check score -> probably okay
   
 - story: conversation sleep yes trouble no wakeup
@@ -119,10 +119,10 @@ stories:
   - or:
     - intent: noTroubleSleep
     - intent: deny 
-  - action: action_scoreCheckSleep
+  # - action: action_scoreCheck
   # check score 
 
-  - story: conversation sleep no trouble yes wakeup
+- story: conversation sleep no trouble yes wakeup
   steps:
   - intent: start
   - slot_was_set:
@@ -159,5 +159,111 @@ stories:
     entities:
       - value: 1  
   - action: action_scoreAdd
-  - action: action_scoreCheckSleep
+  # - action: action_scoreCheck
   # check score
+
+- story: conversation yes activity 
+  steps:
+  - intent: start
+  - slot_was_set:
+    - sleep: false
+  - action: utter_start
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_askchangenormal
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_howLongChange
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askActivity
+  - intent: affirm 
+  - action: utter_askActivityEnjoy
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - checkpoint: interest
+  # ask interest
+
+- story: conversation no activity 
+  steps:
+  - intent: start
+  - slot_was_set:
+    - sleep: false
+  - action: utter_start
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_askchangenormal
+  - or:
+    - intent: affirm
+    - intent: deny
+  - action: utter_howLongChange
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askActivity
+  - intent: deny 
+  - action: utter_askActivityNo
+  - or:
+    - intent: reasonActivity
+    - intent: notSure
+  - checkpoint: interest
+
+- story: interest checkpoint yes
+  steps:
+  - checkpoint: interest
+  - action: utter_askInterest
+  - intent: affirm
+  - action: utter_askInterestLevel
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - checkpoint: physcialenergy
+
+
+- story: interest checkpoint no
+  steps:
+  - checkpoint: interest
+  - action: utter_askInterest
+  - intent: deny
+  - checkpoint: physcialenergy
+  
+
+- story: pe checkpoint yes leaden yes interfere
+  steps:
+  - checkpoint: physcialenergy
+  - action: utter_askPhysicalEnergy
+  - intent: affirm
+  - action: utter_askPhysicalEnergyInterfere
+  - intent: affirm
+  - action: utter_askPhysicalEnergyTime
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  # score?
+
+- story: pe checkpoint yes leaden no interfere
+  steps:
+  - checkpoint: physcialenergy
+  - action: utter_askPhysicalEnergy
+  - intent: affirm
+  - action: utter_askPhysicalEnergyInterfere
+  - intent: deny
+  - action: action_scoreAdd
+  #  score?
+
+- story: pe checkpoint no leaden
+  steps:
+  - checkpoint: physcialenergy
+  - action: utter_askPhysicalEnergy
+  - intent: deny
+  # score?

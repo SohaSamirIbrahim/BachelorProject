@@ -11,7 +11,7 @@ actions:
 - action_restart
 - action_start
 - action_scoreAdd
-- action_scoreCheckSleep
+- action_scoreCheck
 - action_default_fallback
 
 entities:
@@ -52,6 +52,7 @@ slots:
   value:
     type: float
     influence_conversation: False
+    initial_value: 1
     mappings:
     - type: from_entity
       entity: value
@@ -71,6 +72,9 @@ intents:
 - troubleSleep
 - notSure
 - noTroubleSleep
+- reasonActivity
+- check
+- general
 
 responses:
   utter_restart:
@@ -298,6 +302,13 @@ responses:
   utter_askActivity:
   - text: Have you participated in any enjoyable activities this past week?
 
+  utter_askActivityNo:
+  - text: Why?
+  - text: What is the reason?
+  - text: Any particular reason why you haven't?
+  - text: Why is that?
+  - text: Why not?
+
   utter_askActivityEnjoy:
   - text: Compared to your usual, how have you enjoyed these activities?
     buttons:
@@ -310,15 +321,13 @@ responses:
     - title: Unable to enjoy any activity done
       payload: /score{{"value":3}}
 
-  # utter_askInterest:
-  # - text: Have you noticed any change in your level of interest and motivation for completing daily activities?
-
   utter_askInterest:
+  - text: Have you noticed any change in your level of interest and motivation for completing daily activities?
+
+  utter_askInterestLevel:
   - text: How would you describe your level of interest and motivation to complete daily activities?
     buttons:
-    - title: No change from usual
-      payload: /score{{"value":0}}
-    - title: Reduction in former interests/activities
+    - title: Slight reduction in former interests/activities
       payload: /score{{"value":1}}
     - title: Only one or two former interests remain 
       payload: /score{{"value":2}}
@@ -327,12 +336,9 @@ responses:
 
   utter_askPhysicalEnergy:
   - text: During the past week, have you had feelings of being weighted down, like you had weights on your arms and legs?
-  # affirm/deny or leaden/notleaden
 
   utter_askPhysicalEnergyInterfere:
   - text: Does the feeling of being weighted down interfere with your daily activities ? 
-  # if no -> score1
-  # affirm/deny or interfere/doesnt
 
   utter_askPhysicalEnergyTime:
   - text: How much of the time have you felt weighted down in the past week?
