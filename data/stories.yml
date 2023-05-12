@@ -45,8 +45,7 @@ stories:
     entities:
       - value: 1  
   - action: action_scoreAdd
-  # - action: action_scoreCheck
-  # check score if higher -> ask general questions
+  - checkpoint: scoreCheck
 
 - story: conversation sleep no trouble no wakeup
   steps:
@@ -79,8 +78,7 @@ stories:
   - or:
     - intent: noTroubleSleep
     - intent: deny 
-  # - action: action_scoreCheck
-  # check score -> probably okay
+  - checkpoint: scoreCheck
   
 - story: conversation sleep yes trouble no wakeup
   steps:
@@ -119,7 +117,7 @@ stories:
   - or:
     - intent: noTroubleSleep
     - intent: deny 
-  # - action: action_scoreCheck
+  - checkpoint: scoreCheck
   # check score 
 
 - story: conversation sleep no trouble yes wakeup
@@ -159,7 +157,7 @@ stories:
     entities:
       - value: 1  
   - action: action_scoreAdd
-  # - action: action_scoreCheck
+  - checkpoint: scoreCheck
   # check score
 
 - story: conversation yes activity 
@@ -248,7 +246,8 @@ stories:
   - intent: score
     entities:
       - value: 1  
-  - action: action_scoreAdd
+  - action: action_scoreAdd  
+  - checkpoint: scoreCheck
   # score?
 
 - story: pe checkpoint yes leaden no interfere
@@ -259,11 +258,25 @@ stories:
   - action: utter_askPhysicalEnergyInterfere
   - intent: deny
   - action: action_scoreAdd
-  #  score?
+  - checkpoint: scoreCheck
 
 - story: pe checkpoint no leaden
   steps:
   - checkpoint: physcialenergy
   - action: utter_askPhysicalEnergy
   - intent: deny
-  # score?
+  - checkpoint: scoreCheck
+
+- story: score > 3
+  steps:
+  - checkpoint: scoreCheck
+  - action: action_scoreCheck
+  - intent: general
+  # ask general questions
+
+- story: score < 3
+  steps:
+  - checkpoint: scoreCheck
+  - action: action_scoreCheck
+  - intent: goodbye
+  # checkup later on you
