@@ -32,3 +32,8 @@ rules:
 #   steps:
 #   - intent: general
 #   - action: utter_askMood
+
+# - rule: therapy bot
+#   steps: 
+#   - intent: therapy
+#   - action: #handoff to therapy

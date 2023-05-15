@@ -3,14 +3,17 @@ nlu:
 - intent: check
   examples: |
     - check
+    - test
 
 - intent: restart
   examples: |
     - restart
+    - again
 
 - intent: start
   examples: |
     - hey
+    - start
 
 - intent: greet
   examples: |
@@ -89,6 +92,13 @@ nlu:
     - felt it yes
     - happens yes
     - yes it does interfere
+    - yes i have noticed a change
+    - yes it changed the last week
+    - there was a change yes
+    - it changed yes
+    - yes it changed
+    - yes it has changed
+    - yes it has
 
 - intent: troubleSleep
   examples: |
@@ -151,6 +161,16 @@ nlu:
     - no it doesn't
     - doesn't
     - does not
+    - don't feel that way
+    - no it didn't change
+    - no change
+    - no it hasn't
+    - haven't noticed
+    - no i didn't notice
+    - there was no change
+    - no it didn't change
+    - it didn't
+    - didn't occur    
 
 - intent: notSure
   examples: |
@@ -171,6 +191,7 @@ nlu:
 - intent: reasonActivity
   examples: |
     - tired
+    - exhausted
     - no interest
     - didn't want to
     - don't want to
@@ -203,6 +224,14 @@ nlu:
     - so perfect
     - I have been feeling good
     - been good
+    - alright
+    - everything is wonderful
+    - no i feel good
+    - i feel great
+    - i feel fine
+    - fine
+    - great
+    - no i feel great 
 
 - intent: mood_unhappy
   examples: |
@@ -233,6 +262,43 @@ nlu:
     - down
     - feeling down
     - have been feeling down
+    - have been feeling sad
+    - always down
+
+- intent: energyTired
+  examples: |
+    - yes feeling tired
+    - yes feeling bad
+    - tired
+    - exhausted
+    - yes i feel exhausted
+    - yes i feel 
+
+- intent: increase
+  examples: |
+    - it increased
+    - i gained weight
+    - became higher
+    - increased
+    - gained
+    - fatter
+    - gained some  
+    - bigger
+    - bigger apetite
+    - eat more
+
+- intent: deacrease
+  examples: |
+    - decreased
+    - it decreased
+    - i lost weight
+    - thinner
+    - lost some
+    - became less
+    - smaller
+    - eat less
+    - less appetite
+    
 
 - intent: bot_challenge
   examples: |

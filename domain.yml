@@ -12,6 +12,7 @@ actions:
 - action_start
 - action_scoreAdd
 - action_scoreCheck
+- action_scoreFinal
 - action_default_fallback
 
 entities:
@@ -75,6 +76,9 @@ intents:
 - reasonActivity
 - check
 - general
+- increase
+- decrease
+- therapy
 
 responses:
   utter_restart:
@@ -99,7 +103,6 @@ responses:
     - title: more than 2 weeks
       payload: /score{{"value":3}}
   
-  #mood_unhappy/affirm or mood_great/deny
   utter_askMood:
   - text: What’s your mood been like this past week? Have you been feeling down or sad? 
 
@@ -125,28 +128,8 @@ responses:
     - title: extremely pessimistic/ see no hope
       payload: /score{{"value":3}}
 
-# make not button response  
-  utter_askEnergy:
-  - text: How has your energy been this past week?
-    buttons:
-    - title: no change
-      payload: /score{{"value":0}}
-    - title: tired
-      payload: /tired
-
-  utter_askTired:
-  - text: How bad has it been?
-    buttons:
-    - title: tire easily most of the time
-      payload: /score{{"value":1}}
-    - title: effort to maintain activity
-      payload: /score{{"value":2}}
-    - title: unable to carry activity due to lack of energy
-      payload: /score{{"value":3}}
-
   utter_askWeight:
   - text: Has your weight changed within the last two weeks?
-  # affirm or deny/ weight changed/weightdidnt
 
   utter_askWeightIncOrDec:
   - text: How has your weight changed? Did it increase or decrease?
@@ -173,11 +156,9 @@ responses:
 
   utter_askAppetite:
   - text: Compared to your usual appetite have you noticed any appetite change in the last two weeks?
-  # deny or affirm/ appetite change or didnt
 
   utter_askAppetiteIncOrDec:
   - text: How has your appetite changed? Do you feel it has increased or decreased?
-  # inc/dec
 
   utter_askAppetiteDec:
   - text: How much less is your appetite comapred to normal?
@@ -201,7 +182,6 @@ responses:
 
   utter_askAnxious:
   - text: Have you been feeling anxious, nervous or on edge more than usual in the past week?
-  # affirm/deny or anxious/notanxious
 
   utter_askAnxiousTime:
   - text: Approximately how much of the time the last week have you been feeling anxious?
@@ -215,7 +195,6 @@ responses:
 
   utter_askIrritable:
   - text:  Have you found yourself becoming angry more so than normal?
-  # affirm/deny or irritable/notirritable
 
   utter_askIrritableTime:
   - text: How much of the time in the past week have you been feeling especially irritable?
@@ -229,7 +208,6 @@ responses:
   
   utter_askSlowedDown:
   - text: Have you felt slowed down in your thinking, speaking, or movement in the past week?
-  # affirm/deny or slowes/notslowed
 
   utter_askSlowedDownSeverity:
   - text: How would you describe being slowed down as?
@@ -334,6 +312,19 @@ responses:
     - title: No interest in formerly pursued activities
       payload: /score{{"value":3}}
 
+  utter_askEnergy:
+  - text: Have you noticed a change in you energy this past week?
+
+  utter_askTired:
+  - text: How bad has it been?
+    buttons:
+    - title: tire easily most of the time
+      payload: /score{{"value":1}}
+    - title: effort to maintain activity
+      payload: /score{{"value":2}}
+    - title: unable to carry activity due to lack of energy
+      payload: /score{{"value":3}}
+
   utter_askPhysicalEnergy:
   - text: During the past week, have you had feelings of being weighted down, like you had weights on your arms and legs?
 
@@ -371,11 +362,13 @@ responses:
   - text: Awesome!
 
   utter_goodbye:
-  - text: Bye
+  # - text: Bye
   - text: See you soon!
-  - text: Bye Bye
+  # - text: Bye Bye
   - text: Talk to you soon. Take care!
   - text: Have a great day!
+  - text: Great! Will talk to you soon!
+  - text: Will check up on you later, take care!
 
   utter_iamabot:
   - text: I am a bot here to help you.

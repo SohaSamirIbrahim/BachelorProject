@@ -130,8 +130,9 @@ class ActionScoreCheck(Action):
         id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
-            slot = data.get("score")
-            if(slot> 3):
+            score = data.get("score")
+            change = data.get("change")
+            if((score> 3 and change == "sleep") or (score > 5 and change == "activity") ):
                 dataParse = {
                 "intent": {
                     "name": "general",
@@ -150,4 +151,36 @@ class ActionScoreCheck(Action):
         else:
             dispatcher.utter_message("Error")
         
+        return []
+    
+class ActionScoreFinal(Action):
+    def name(self) -> Text:
+        return "action_scoreFinal"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        id = os.environ.get("TestID")
+        data = fetchDoc(id)
+        if (data):
+            score = data.get("score")
+            if(score > 8):
+                # CALL API OF THERAPY BOT
+                dataParse = {
+                "intent": {
+                    "name": "therapy",
+                    "confidence": 1.0,
+                    }
+                }
+                return [ActionExecuted("action_listen"),UserUttered(text="/therapy", parse_data=dataParse),]
+
+            else:
+                dataParse = {
+                "intent": {
+                    "name": "goodbye",
+                    "confidence": 1.0,
+                    }
+                }
+                return [ActionExecuted("action_listen"),UserUttered(text="/goodbye", parse_data=dataParse),]
         return []
