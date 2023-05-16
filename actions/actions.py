@@ -19,6 +19,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+import requests
+
+
 def newDoc (senderid, doc):
     db = firestore.client()
     collection_ref = db.collection('test')
@@ -60,7 +63,36 @@ class CustomFallbackAction(Action):
 
         dispatcher.utter_message("I'm sorry, I didn't understand. Can you please rephrase your message?")
         return [UserUtteranceReverted()]
-    
+
+from fbmessenger import BaseMessenger
+from fbmessenger.elements import Text
+from fbmessenger import MessengerClient
+
+class ActionInitiateConversation(Action):
+    def name(self) -> Text:
+        return "action_initiate_conversation"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        # Retrieve the user's Facebook Messenger ID
+        user_id = tracker.sender_id
+
+        # Create the message payload
+        message = Text(text="Hello, this is your chatbot!")
+
+        # Create the Messenger client
+        client = MessengerClient(page_access_token=os.environ.get("FB_Page_Access_Token"))
+
+        # Send the message using the Messenger client
+        response = client.send(user_id=user_id, message=message)
+
+        # Handle the response
+        if response["success"]:
+            dispatcher.utter_message(text="Message sent successfully!")
+        else:
+            dispatcher.utter_message(text="Failed to send message.")
+
+        return []
+
 class ActionStart(Action):
 
     def name(self) -> Text:
