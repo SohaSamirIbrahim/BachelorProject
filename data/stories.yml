@@ -2,7 +2,8 @@ version: "3.1"
 
 stories:
 
-- story: conversation sleep yes trouble yes wakeup
+# SLEEP CONVERSATIONS
+- story: conv sleep start
   steps:
   - intent: start
   - slot_was_set:
@@ -11,10 +12,6 @@ stories:
   - or:
     - intent: affirm
     - intent: deny
-  # - action: utter_askchangenormal
-  # - or:
-  #   - intent: affirm
-  #   - intent: deny
   - action: utter_howLongChange
   - intent: score
     entities:
@@ -26,6 +23,12 @@ stories:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askSleepTrouble
+
+- story: has sleep trouble
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_askSleepTrouble
   - or:
     - intent: troubleSleep
     - intent: affirm
@@ -35,6 +38,18 @@ stories:
     entities:
       - value: 1  
   - action: action_scoreAdd
+  - action: utter_askSleepWakeup
+
+- story: has no sleep trouble
+  steps:
+  - action: utter_askSleepTrouble
+  - or:
+    - intent: noTroubleSleep
+    - intent: deny
+  - action: utter_askSleepWakeup
+
+- story: has wakeup trouble
+  steps:
   - action: utter_askSleepWakeup
   - or:
     - intent: troubleSleep
@@ -48,73 +63,8 @@ stories:
   - action: action_scoreCheck
   - checkpoint: scoreCheck
 
-- story: conversation sleep no trouble no wakeup
+- story: has no wakeup trouble
   steps:
-  - intent: start
-  - slot_was_set:
-    - sleep: true
-  - action: utter_start
-  - or:
-    - intent: affirm
-    - intent: deny
-  # - action: utter_askchangenormal
-  # - or:
-  #   - intent: affirm
-  #   - intent: deny
-  - action: utter_howLongChange
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: utter_askSleep
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: utter_askSleepTrouble
-  - or:
-    - intent: noTroubleSleep
-    - intent: deny
-  - action: utter_askSleepWakeup
-  - or:
-    - intent: noTroubleSleep
-    - intent: deny 
-  - action: action_scoreCheck
-  - checkpoint: scoreCheck
-  
-- story: conversation sleep yes trouble no wakeup
-  steps:
-  - intent: start
-  - slot_was_set:
-    - sleep: true
-  - action: utter_start
-  - or:
-    - intent: affirm
-    - intent: deny
-  # - action: utter_askchangenormal
-  # - or:
-  #   - intent: affirm
-  #   - intent: deny
-  - action: utter_howLongChange
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: utter_askSleep
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: utter_askSleepTrouble
-  - or:
-    - intent: troubleSleep
-    - intent: affirm
-    - intent: notSure
-  - action: utter_askSleepTroubleTime
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
   - action: utter_askSleepWakeup
   - or:
     - intent: noTroubleSleep
@@ -122,47 +72,12 @@ stories:
   - action: action_scoreCheck
   - checkpoint: scoreCheck
 
-- story: conversation sleep no trouble yes wakeup
-  steps:
-  - intent: start
-  - slot_was_set:
-    - sleep: true
-  - action: utter_start
-  - or:
-    - intent: affirm
-    - intent: deny
-  # - action: utter_askchangenormal
-  # - or:
-  #   - intent: affirm
-  #   - intent: deny
-  - action: utter_howLongChange
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: utter_askSleep
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: utter_askSleepTrouble
-  - or:
-    - intent: noTroubleSleep
-    - intent: deny
-  - action: utter_askSleepWakeup
-  - or:
-    - intent: troubleSleep
-    - intent: affirm
-    - intent: notSure 
-  - action: utter_askSleepWakeupTime
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: action_scoreCheck
-  - checkpoint: scoreCheck
+#END SLEEP CONVERSATIONS
 
-- story: conversation yes activity 
+
+# ACTIVITY CONVERSATIONS
+
+- story: conv activity start
   steps:
   - intent: start
   - slot_was_set:
@@ -171,15 +86,15 @@ stories:
   - or:
     - intent: affirm
     - intent: deny
-  # - action: utter_askchangenormal
-  # - or:
-  #   - intent: affirm
-  #   - intent: deny
   - action: utter_howLongChange
   - intent: score
     entities:
       - value: 1  
   - action: action_scoreAdd
+  - action: utter_askActivity
+
+- story: has activity
+  steps:
   - action: utter_askActivity
   - intent: affirm 
   - action: utter_askActivityEnjoy
@@ -188,26 +103,9 @@ stories:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askInterest
-  - checkpoint: interest
 
-- story: conversation no activity 
+- story: has no activity
   steps:
-  - intent: start
-  - slot_was_set:
-    - sleep: false
-  - action: utter_start
-  - or:
-    - intent: affirm
-    - intent: deny
-  # - action: utter_askchangenormal
-  # - or:
-  #   - intent: affirm
-  #   - intent: deny
-  - action: utter_howLongChange
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
   - action: utter_askActivity
   - intent: deny 
   - action: utter_askActivityNo
@@ -215,12 +113,10 @@ stories:
     - intent: reasonActivity
     - intent: notSure
   - action: utter_askInterest
-  - checkpoint: interest
 
-- story: has interest and has energy
+- story: has interest
   steps:
-  - checkpoint: interest
-  # - action: utter_askInterest
+  - action: utter_askInterest
   - intent: affirm
   - action: utter_askInterestLevel
   - intent: score
@@ -228,21 +124,15 @@ stories:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askEnergy
-  - intent: deny
-  - action: utter_askPhysicalEnergy
-  - checkpoint: physcialenergy
-  # - checkpoint: energy
 
-- story: has interest and no energy
+- story: has no interest
   steps:
-  - checkpoint: interest
-  # - action: utter_askInterest
-  - intent: affirm
-  - action: utter_askInterestLevel
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
+  - action: utter_askInterest
+  - intent: deny
+  - action: utter_askEnergy
+
+- story: energy change
+  steps:
   - action: utter_askEnergy
   - or:
     - intent: affirm
@@ -253,63 +143,28 @@ stories:
       - value: 1  
   - action: action_scoreAdd  
   - action: utter_askPhysicalEnergy
-  - checkpoint: physcialenergy
 
-- story: has no interest and has energy
+- story: no energy change
   steps:
-  - checkpoint: interest
-  # - action: utter_askInterest
-  - intent: deny
   - action: utter_askEnergy
   - intent: deny
   - action: utter_askPhysicalEnergy
-  - checkpoint: physcialenergy
-  # - checkpoint: energy
 
-- story: has no interest and no energy
+- story: weighted down
   steps:
-  - checkpoint: interest
-  # - action: utter_askInterest
-  - intent: deny
-  - action: utter_askEnergy
-  - or:
-    - intent: affirm
-    - intent: notSure
-  - action: utter_askTired
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd 
   - action: utter_askPhysicalEnergy
-  - checkpoint: physcialenergy
-
-  
-# # - story: energy checkpoint not tired
-# #   steps:
-# #   - checkpoint: energy
-# #   - action: utter_askEnergy
-# #   - intent: deny
-# #   - checkpoint: physcialenergy
-
-# # - story: energy checkpoint tired
-# #   steps:
-# #   - checkpoint: energy
-# #   - action: utter_askEnergy
-# #   - or:
-# #     - intent: affirm
-# #     - intent: notSure
-# #   - action: utter_askTired
-# #   - intent: score
-# #     entities:
-# #       - value: 1  
-# #   - action: action_scoreAdd  
-# #   - checkpoint: physcialenergy
-
-- story: pe checkpoint yes leaden yes interfere
-  steps:
-  - checkpoint: physcialenergy
-  # - action: utter_askPhysicalEnergy
   - intent: affirm
+  - action: utter_askPhysicalEnergyInterfere
+
+- story: not weighted down
+  steps:
+  - action: utter_askPhysicalEnergy
+  - intent: deny
+  - action: action_scoreCheck
+  - checkpoint: scoreCheck
+
+- story: interferes
+  steps:
   - action: utter_askPhysicalEnergyInterfere
   - intent: affirm
   - action: utter_askPhysicalEnergyTime
@@ -320,44 +175,57 @@ stories:
   - action: action_scoreCheck
   - checkpoint: scoreCheck
 
-- story: pe checkpoint yes leaden no interfere
+- story: doesn't interfere
   steps:
-  - checkpoint: physcialenergy
-  # - action: utter_askPhysicalEnergy
-  - intent: affirm
   - action: utter_askPhysicalEnergyInterfere
-  - intent: deny
   - action: action_scoreAdd
   - action: action_scoreCheck
   - checkpoint: scoreCheck
 
-- story: pe checkpoint no leaden
-  steps:
-  - checkpoint: physcialenergy
-  # - action: utter_askPhysicalEnergy
-  - intent: deny
-  - action: action_scoreCheck
-  - checkpoint: scoreCheck
+# END ACTIVITY CONVERSATIONS
 
-- story: score > 3 and mood good 
+
+# SCORE CHECKS
+
+- story: score high ask general
   steps:
   - checkpoint: scoreCheck
-  # - action: action_scoreCheck
   - intent: general
+  - action: utter_askMood
+
+- story: score low say bye
+  steps:
+  - checkpoint: scoreCheck
+  - intent: goodbye
+  - action: utter_goodbye  
+
+- story: final score low
+  steps:
+  - checkpoint: finalScore
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: final score high
+  steps:
+  - checkpoint: finalScore
+  - intent: therapy
+  - action: utter_cheer_up
+
+# END SCORE CHECKS
+
+
+# GENERAL QUESTIONS
+
+- story: good mood
+  steps:
   - action: utter_askMood
   - or:
     - intent: mood_great
     - intent: deny
   - action: utter_askAnxious
-  - checkpoint: anxious
-  # - checkpoint: general
-  # ask general questions
 
-- story: score > 3 and mood bad 
+- story: bad mood
   steps:
-  - checkpoint: scoreCheck
-  # - action: action_scoreCheck
-  - intent: general
   - action: utter_askMood
   - or:
     - intent: mood_unhappy
@@ -369,56 +237,28 @@ stories:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askAnxious
-  - checkpoint: anxious
 
-- story: score < 3
+- story: is anxious
   steps:
-  - checkpoint: scoreCheck
-  # - action: action_scoreCheck
-  - intent: goodbye
-  - action: utter_goodbye
-  # checkup later on you
+  - action: utter_askAnxious
+  - or:
+    - intent: affirm
+    - intent: notSure
+  - action: utter_askAnxiousTime
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd  
+  - action: utter_askIrritable
 
-# # - story: general mood good
-# #   steps:
-# #   - checkpoint: general
-# #   - action: utter_askMood
-# #   - or:
-# #     - intent: mood_great
-# #     - intent: deny
-# #   - checkpoint: anxious
-
-# # - story: general mood bad
-# #   steps:
-# #   - checkpoint: general
-# #   - action: utter_askMood
-# #   - or:
-# #     - intent: mood_unhappy
-# #     - intent: affirm
-# #     - intent: notSure
-# #   - action: utter_howOftenMood
-# #   - intent: score
-# #     entities:
-# #       - value: 1  
-# #   - action: action_scoreAdd  
-# #   - checkpoint: anxious
-
-- story: is not anxious and not irritable
+- story: is not anxious
   steps:
-  - checkpoint: anxious
-  # - action: utter_askAnxious
+  - action: utter_askAnxious
   - intent: deny
   - action: utter_askIrritable
-  - intent: deny
-  - action: utter_askSlowedDown
-  - checkpoint: slowedDown
-  # - checkpoint: irritable
 
-- story: is not anxious and is irritable
+- story: is irritable
   steps:
-  - checkpoint: anxious
-  # - action: utter_askAnxious
-  - intent: deny
   - action: utter_askIrritable
   - or:
     - intent: affirm
@@ -429,77 +269,16 @@ stories:
       - value: 1  
   - action: action_scoreAdd 
   - action: utter_askSlowedDown
-  - checkpoint: slowedDown
 
-
-- story: is anxious and not irritable
+- story: is not irritable
   steps:
-  - checkpoint: anxious
-  # - action: utter_askAnxious
-  - or:
-    - intent: affirm
-    - intent: notSure
-  - action: utter_askAnxiousTime
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd  
   - action: utter_askIrritable
   - intent: deny
   - action: utter_askSlowedDown
-  - checkpoint: slowedDown
-  # - checkpoint: irritable
-
-- story: is anxious and irritable
-  steps:
-  - checkpoint: anxious
-  # - action: utter_askAnxious
-  - or:
-    - intent: affirm
-    - intent: notSure
-  - action: utter_askAnxiousTime
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd  
-  - action: utter_askIrritable
-  - or:
-    - intent: affirm
-    - intent: notSure
-  - action: utter_askIrritableTime
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd 
-  - action: utter_askSlowedDown
-  - checkpoint: slowedDown
-
-
-# # - story: is not irritable 
-# #   steps:
-# #   - checkpoint: irritable
-#   # - action: utter_askIrritable
-#   # - intent: deny
-#   # - checkpoint: slowedDown
-
-# # - story: is irritable 
-# #   steps:
-# #   - checkpoint: irritable
-#   # - action: utter_askIrritable
-#   # - or:
-#   #   - intent: affirm
-#   #   - intent: notSure
-#   # - action: utter_askIrritableTime
-#   # - intent: score
-#   #   entities:
-#   #     - value: 1  
-#   # - action: action_scoreAdd  
-# #   - checkpoint: slowedDown
 
 - story: is not slowed down
   steps:
-  - checkpoint: slowedDown
-  # - action: utter_askSlowedDown
+  - action: utter_askSlowedDown
   - intent: deny
   - action: utter_askConcentration
   - intent: score
@@ -512,13 +291,10 @@ stories:
       - value: 1  
   - action: action_scoreAdd  
   - action: utter_askWeight
-  - checkpoint: weight
-  # - checkpoint: concentrationFuture
 
 - story: is slowed down
   steps:
-  - checkpoint: slowedDown
-  # - action: utter_askSlowedDown
+  - action: utter_askSlowedDown
   - or:
     - intent: affirm
     - intent: notSure
@@ -538,31 +314,23 @@ stories:
       - value: 1  
   - action: action_scoreAdd 
   - action: utter_askWeight
-  - checkpoint: weight
-  # - checkpoint: concentrationFuture
 
-# # - story: concentration and future
-# #   steps:
-# #   - checkpoint: concentrationFuture
-#   # - action: utter_askConcentration
-#   # - intent: score
-#   #   entities:
-#   #     - value: 1  
-#   # - action: action_scoreAdd  
-#   # - action: utter_askFuture
-#   # - intent: score
-#   #   entities:
-#   #     - value: 1  
-#   # - action: action_scoreAdd  
-#   # - checkpoint: weight
-
-- story: weight change inc
+- story: no weight change
   steps:
-  - checkpoint: weight
-  # - action: utter_askWeight
+  - action: utter_askWeight
+  - intent: deny
+  - action: utter_askAppetite
+
+- story: weight change
+  steps:
+  - action: utter_askWeight
   - or:
     - intent: notSure
     - intent: affirm
+  - action: utter_askWeightIncOrDec
+
+- story: weight increase
+  steps:
   - action: utter_askWeightIncOrDec
   - intent: increase
   - action: utter_askWeightInc
@@ -571,15 +339,9 @@ stories:
       - value: 1  
   - action: action_scoreAdd 
   - action: utter_askAppetite
-  - checkpoint: appetite
 
-- story: weight change dec
+- story: weight decrease
   steps:
-  - checkpoint: weight
-  # - action: utter_askWeight
-  - or:
-    - intent: notSure
-    - intent: affirm
   - action: utter_askWeightIncOrDec
   - intent: decrease
   - action: utter_askWeightDec
@@ -588,23 +350,23 @@ stories:
       - value: 1  
   - action: action_scoreAdd  
   - action: utter_askAppetite
-  - checkpoint: appetite
 
-- story: weight no change
+- story: no appetite change
   steps:
-  - checkpoint: weight
-  # - action: utter_askWeight
-  - intent: deny
   - action: utter_askAppetite
-  - checkpoint: appetite
+  - intent: deny
+  - action: action_scoreFinal
 
-- story: appetite change inc
+- story: appetite change
   steps:
-  - checkpoint: appetite
-  # - action: utter_askAppetite
+  - action: utter_askAppetite
   - or:
     - intent: notSure
     - intent: affirm
+  - action: utter_askAppetiteIncOrDec
+
+- story: appetite increase
+  steps:
   - action: utter_askAppetiteIncOrDec
   - intent: increase
   - action: utter_askAppetiteInc
@@ -613,26 +375,18 @@ stories:
       - value: 1  
   - action: action_scoreAdd  
   - action: action_scoreFinal
+  - checkpoint: finalScore
 
-- story: appetite change dec
+- story: appetite decrease
   steps:
-  - checkpoint: appetite
-  # - action: utter_askAppetite
-  - or:
-    - intent: notSure
-    - intent: affirm
   - action: utter_askAppetiteIncOrDec
-  - intent: decrease
-  - action: utter_askAppetiteDec
+  - intent: increase
+  - action: utter_askAppetiteInc
   - intent: score
     entities:
       - value: 1  
-  - action: action_scoreAdd 
+  - action: action_scoreAdd  
   - action: action_scoreFinal
+  - checkpoint: finalScore
 
-- story: appetite no change
-  steps: 
-  - checkpoint: appetite
-  # - action: utter_askAppetite
-  - intent: deny
-  - action: action_scoreFinal
+# END GENERAL QUESTIONS

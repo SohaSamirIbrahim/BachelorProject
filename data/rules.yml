@@ -2,10 +2,11 @@ version: "3.1"
 
 rules:
 
-# - rule: Say goodbye anytime the user says goodbye
-#   steps:
-#   - intent: goodbye
-#   - action: utter_goodbye
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+  wait_for_user_input: false
 
 - rule: Say 'I am a bot' anytime the user challenges
   steps:
@@ -27,7 +28,6 @@ rules:
   steps:
   - intent: check
   - action: action_initiate_conversation
-
 
 # - rule: custom
 #   steps:

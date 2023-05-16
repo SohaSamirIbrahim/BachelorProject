@@ -64,32 +64,48 @@ class CustomFallbackAction(Action):
         dispatcher.utter_message("I'm sorry, I didn't understand. Can you please rephrase your message?")
         return [UserUtteranceReverted()]
 
-from fbmessenger import BaseMessenger
-from fbmessenger.elements import Text
-from fbmessenger import MessengerClient
+import requests
+
 
 class ActionInitiateConversation(Action):
     def name(self) -> Text:
         return "action_initiate_conversation"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        # Retrieve the user's Facebook Messenger ID
-        user_id = tracker.sender_id
+    def run(self, dispatcher: CollectingDispatcher, 
+            tracker: Tracker, 
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        access_token = os.environ.get("FB_Page_Access_Token")
+        user_id = "USER_FACEBOOK_MESSENGER_ID"
+        message = "Hello, this is a message from the bot!"
 
-        # Create the message payload
-        message = Text(text="Hello, this is your chatbot!")
+        url = f"https://graph.facebook.com/v13.0/me/messages?access_token={access_token}"
+        headers = {"Content-Type": "application/json"}
 
-        # Create the Messenger client
-        client = MessengerClient(page_access_token=os.environ.get("FB_Page_Access_Token"))
+        payload = {
+            "recipient": {"id": user_id},
+            "message": {"text": message}
+        }
 
-        # Send the message using the Messenger client
-        response = client.send(user_id=user_id, message=message)
+        response = requests.post(url, headers=headers, json=payload)
 
-        # Handle the response
-        if response["success"]:
-            dispatcher.utter_message(text="Message sent successfully!")
-        else:
-            dispatcher.utter_message(text="Failed to send message.")
+        # # Retrieve the user's Facebook Messenger ID
+        # user_id = tracker.sender_id
+
+        # # Create the message payload
+        # message = Text(text="Hello, this is your chatbot!")
+
+        # # Create the Messenger client
+        # client = MessengerClient(page_access_token=os.environ.get("FB_Page_Access_Token"))
+
+        # # Send the message using the Messenger client
+        # response = client.send(user_id=user_id, message=message)
+
+        # # Handle the response
+        # if response["success"]:
+        #     dispatcher.utter_message(text="Message sent successfully!")
+        # else:
+        #     dispatcher.utter_message(text="Failed to send message.")
 
         return []
 

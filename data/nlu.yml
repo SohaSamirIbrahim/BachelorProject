@@ -12,7 +12,6 @@ nlu:
 
 - intent: start
   examples: |
-    - hey
     - start
 
 - intent: greet
