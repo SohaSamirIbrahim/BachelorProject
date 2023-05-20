@@ -289,7 +289,7 @@ nlu:
     - bigger apetite
     - eat more
 
-- intent: deacrease
+- intent: decrease
   examples: |
     - decreased
     - it decreased

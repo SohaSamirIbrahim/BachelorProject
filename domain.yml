@@ -83,15 +83,6 @@ intents:
 - therapy
 
 responses:
-  # utter_id:
-  # - text: Find your user ID for an app or game
-# Click your profile picture in the top right of Facebook.
-# Select Settings & privacy, then click Settings.
-# Click Apps and Websites in the left side menu.
-# Click View and Edit next to an app or game.
-# Scroll down to the bottom of the page. Your user ID can be found and copied from this section.
-  utter_restart:
-  - text: Conversation restarted
   
   utter_start:
   - text: I noticed there was a change in your {change} is everything okay?
@@ -102,7 +93,6 @@ responses:
   # GENERAL
   utter_howLongChange:
   - text: Has this been happening for more than a week?
-
 
   utter_howLong:
   - text: Approximately how long has this been happening?
@@ -128,10 +118,11 @@ responses:
       payload: /score{{"value":3}}
   
   utter_askFuture:
-  - text: How have you been feeling about the future? (optimistic/pessimistic) 
+  - text: Have you been feeling pessimistic about the future?
+
+  utter_askPessimistic:
+  - text: How often have you been feeling pessimistic?
     buttons:
-    - title: optimistic
-      payload: /score{{"value":0}}
     - title: ocassionaly pessimistic
       payload: /score{{"value":1}}
     - title: mostly pessimistic
@@ -231,10 +222,11 @@ responses:
       payload: /score{{"value":3}}
 
   utter_askConcentration:
-  - text : In the past week were you able to concentrate on what you were doing and make minor decisions?
+  - text: In the past week have you had any trouble concentrating on what you were doing or trouble making minor decisions?
+
+  utter_askConcentrationTrouble:
+  - text : How bad is it?
     buttons:
-    - title: Yes was able
-      payload: /score{{"value":0}}
     - title: Attention wanders occasionally
       payload: /score{{"value":1}}
     - title: Struggle to focus or make a decision 
@@ -247,10 +239,11 @@ responses:
 
   # SLEEP
   utter_askSleep:
+  - text: On average have you been sleeping more than 8 hours a night in the past week including naps?
+
+  utter_askSleepHours:
   - text: How many hours on average have you been sleeping in a 24-hour period in the past week, including naps?
     buttons:
-    - title: 7-8 hours a night
-      payload: /score{{"value":0}}
     - title: 10 hours a day
       payload: /score{{"value":1}}
     - title: 12 hours a day
@@ -299,10 +292,11 @@ responses:
   - text: Why not?
 
   utter_askActivityEnjoy:
-  - text: Compared to your usual, how have you enjoyed these activities?
+  - text: Compared to your usual, was there a change in how you enjoyed these activities?
+
+  utter_askActivityEnjoyLess:
+  - text: How have you enjoyed these activities compared to usual?
     buttons:
-    - title: No change from usual
-      payload: /score{{"value":0}}
     - title: Do not feel the same enjoynment as usual
       payload: /score{{"value":1}}
     - title: Rarely enjoy an acitvity i once enjoyed

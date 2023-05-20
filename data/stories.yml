@@ -2,6 +2,18 @@ version: "3.1"
 
 stories:
 
+- story: save user
+  steps:
+  - intent: greet
+  - action: action_saveUser
+
+#TO DO: develop story where user starts chat
+- story: sad
+  steps:
+  - intent: mood_unhappy
+  - action: action_saveUser
+  - action: utter_howLongChange
+
 # SLEEP CONVERSATIONS
 - story: conv sleep start
   steps:
@@ -9,21 +21,10 @@ stories:
   - slot_was_set:
     - sleep: true
   - action: action_initiate_conversation
-  # - action: utter_start
   - or:
     - intent: affirm
     - intent: deny
   - action: utter_howLongChange
-  # - intent: score
-  #   entities:
-  #     - value: 1  
-  # - action: action_scoreAdd
-  # - action: utter_askSleep
-  # - intent: score
-  #   entities:
-  #     - value: 1  
-  # - action: action_scoreAdd
-  # - action: utter_askSleepTrouble
 
 - story: less than week sleep
   steps:
@@ -32,11 +33,6 @@ stories:
   - action: utter_howLongChange
   - intent: deny
   - action: utter_askSleep
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd
-  - action: utter_askSleepTrouble
 
 - story: more than week sleep
   steps:
@@ -52,12 +48,30 @@ stories:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askSleep
+
+- story: sleeps more than 8 hours
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_askSleep
+  - or:
+    - intent: affirm
+    - intent: notSure
+  - action: utter_askSleepHours
   - intent: score
     entities:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askSleepTrouble
-  
+
+- story: sleeps 8 hours or less
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_askSleep
+  - intent: deny
+  - action: utter_askSleepTrouble
+
 - story: has sleep trouble
   steps:
   - slot_was_set:
@@ -123,7 +137,6 @@ stories:
   - slot_was_set:
     - sleep: false
   - action: action_initiate_conversation
-  # - action: utter_start
   - or:
     - intent: affirm
     - intent: deny
@@ -154,9 +167,29 @@ stories:
 
 - story: has activity
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askActivity
   - intent: affirm 
   - action: utter_askActivityEnjoy
+
+- story: enjoy activity usual
+  steps:
+  - slot_was_set:
+    - sleep: false
+  - action: utter_askActivityEnjoy
+  - intent: deny
+  - action: utter_askInterest
+
+- story: enjoy activity less than usual
+  steps:
+  - slot_was_set:
+    - sleep: false
+  - action: utter_askActivityEnjoy
+  - or:
+    - intent: affirm
+    - intent: notSure
+  - action: utter_askActivityEnjoyLess
   - intent: score
     entities:
       - value: 1  
@@ -165,6 +198,8 @@ stories:
 
 - story: has no activity
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askActivity
   - intent: deny 
   - action: utter_askActivityNo
@@ -175,6 +210,8 @@ stories:
 
 - story: has interest
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askInterest
   - intent: affirm
   - action: utter_askInterestLevel
@@ -186,12 +223,16 @@ stories:
 
 - story: has no interest
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askInterest
   - intent: deny
   - action: utter_askEnergy
 
 - story: energy change
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askEnergy
   - or:
     - intent: affirm
@@ -205,18 +246,24 @@ stories:
 
 - story: no energy change
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askEnergy
   - intent: deny
   - action: utter_askPhysicalEnergy
 
 - story: weighted down
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askPhysicalEnergy
   - intent: affirm
   - action: utter_askPhysicalEnergyInterfere
 
 - story: not weighted down
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askPhysicalEnergy
   - intent: deny
   - action: action_scoreCheck
@@ -224,6 +271,8 @@ stories:
 
 - story: interferes
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askPhysicalEnergyInterfere
   - intent: affirm
   - action: utter_askPhysicalEnergyTime
@@ -236,6 +285,8 @@ stories:
 
 - story: doesn't interfere
   steps:
+  - slot_was_set:
+    - sleep: false
   - action: utter_askPhysicalEnergyInterfere
   - action: action_scoreAdd
   - action: action_scoreCheck
@@ -340,16 +391,25 @@ stories:
   - action: utter_askSlowedDown
   - intent: deny
   - action: utter_askConcentration
+
+- story: can concentrate
+  steps:
+  - action: utter_askConcentration
+  - intent: deny
+  - action: utter_askFuture
+
+- story: cannot concentrate
+  steps:
+  - action: utter_askConcentration
+  - or:
+    - intent: affirm
+    - intent: notSure
+  - action: utter_askConcentrationTrouble
   - intent: score
     entities:
       - value: 1  
   - action: action_scoreAdd  
   - action: utter_askFuture
-  - intent: score
-    entities:
-      - value: 1  
-  - action: action_scoreAdd  
-  - action: utter_askWeight
 
 - story: is slowed down
   steps:
@@ -368,10 +428,24 @@ stories:
       - value: 1  
   - action: action_scoreAdd  
   - action: utter_askFuture
+
+- story: is pessmitstic
+  steps:
+  - action: utter_askFuture
+  - or:
+    - intent: affirm
+    - intent: notSure
+  - action: utter_askPessimistic
   - intent: score
     entities:
       - value: 1  
   - action: action_scoreAdd 
+  - action: utter_askWeight
+
+- story: is not pessimistic
+  steps:
+  - action: utter_askFuture
+  - intent: deny
   - action: utter_askWeight
 
 - story: no weight change
@@ -439,8 +513,8 @@ stories:
 - story: appetite decrease
   steps:
   - action: utter_askAppetiteIncOrDec
-  - intent: increase
-  - action: utter_askAppetiteInc
+  - intent: decrease
+  - action: utter_askAppetiteDec
   - intent: score
     entities:
       - value: 1  

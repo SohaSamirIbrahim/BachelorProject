@@ -95,15 +95,15 @@ class ActionSaveUser(Action):
         user_id = tracker.sender_id
         username = get_username(tracker.sender_id, access_token)
         if (username and not fetchDoc(user_id)):
-            slot = SlotSet("name", username)
             doc = {
                 "name" : username,
                 "score": 0,
                 "change": " none"
             }    
             newDoc(user_id, doc)
-            dispatcher.utter_message("Thank you!")
-
+            dispatcher.utter_message(" Hello nice to meet you ! Thank you for your coperation.")
+        
+        slot = SlotSet("name", username)
         return[slot]
 
 class ActionInitiateConversation(Action):
@@ -143,7 +143,6 @@ class ActionStart(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
         id = tracker.sender_id
-        # id = os.environ.get("TestID")
         data = fetchDoc(id)
 
         if(data) :
@@ -172,7 +171,6 @@ class ActionScoreAdd(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
         id = tracker.sender_id
-        # id = os.environ.get("TestID")
         value = tracker.get_slot("value")
         if (value == 0):
             return[] 
@@ -201,7 +199,6 @@ class ActionScoreCheck(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         id = tracker.sender_id
-        # id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             score = data.get("score")
@@ -215,6 +212,7 @@ class ActionScoreCheck(Action):
                 }
                 return [ActionExecuted("action_listen"),UserUttered(text="/general", parse_data=dataParse),]
             else:
+                #TO DO: send link to survey chatbot
                 dataParse = {
                 "intent": {
                     "name": "goodbye",
@@ -236,12 +234,12 @@ class ActionScoreFinal(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         id = tracker.sender_id
-        # id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             score = data.get("score")
             if(score > 8):
                 # CALL API OF THERAPY BOT
+                #TO DO: handoff to therapy chatbot
                 dataParse = {
                 "intent": {
                     "name": "therapy",
@@ -251,6 +249,7 @@ class ActionScoreFinal(Action):
                 return [ActionExecuted("action_listen"),UserUttered(text="/therapy", parse_data=dataParse),]
 
             else:
+                #TO DO: send link to survey chatbot
                 dataParse = {
                 "intent": {
                     "name": "goodbye",
