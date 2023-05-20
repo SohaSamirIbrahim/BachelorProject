@@ -28,6 +28,9 @@ nlu:
     - goodevening
     - good afternoon
     - morning
+    - hey
+    - h
+    - hii!
 
 - intent: goodbye
   examples: |

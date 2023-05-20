@@ -8,11 +8,45 @@ stories:
   - intent: start
   - slot_was_set:
     - sleep: true
-  - action: utter_start
+  - action: action_initiate_conversation
+  # - action: utter_start
   - or:
     - intent: affirm
     - intent: deny
   - action: utter_howLongChange
+  # - intent: score
+  #   entities:
+  #     - value: 1  
+  # - action: action_scoreAdd
+  # - action: utter_askSleep
+  # - intent: score
+  #   entities:
+  #     - value: 1  
+  # - action: action_scoreAdd
+  # - action: utter_askSleepTrouble
+
+- story: less than week sleep
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_howLongChange
+  - intent: deny
+  - action: utter_askSleep
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleepTrouble
+
+- story: more than week sleep
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_howLongChange
+  - or:
+    - intent: affirm
+    - intent: notSure
+  - action: utter_howLong
   - intent: score
     entities:
       - value: 1  
@@ -23,7 +57,7 @@ stories:
       - value: 1  
   - action: action_scoreAdd
   - action: utter_askSleepTrouble
-
+  
 - story: has sleep trouble
   steps:
   - slot_was_set:
@@ -42,6 +76,8 @@ stories:
 
 - story: has no sleep trouble
   steps:
+  - slot_was_set:
+    - sleep: true
   - action: utter_askSleepTrouble
   - or:
     - intent: noTroubleSleep
@@ -50,6 +86,8 @@ stories:
 
 - story: has wakeup trouble
   steps:
+  - slot_was_set:
+    - sleep: true
   - action: utter_askSleepWakeup
   - or:
     - intent: troubleSleep
@@ -65,6 +103,8 @@ stories:
 
 - story: has no wakeup trouble
   steps:
+  - slot_was_set:
+    - sleep: true
   - action: utter_askSleepWakeup
   - or:
     - intent: noTroubleSleep
@@ -82,15 +122,34 @@ stories:
   - intent: start
   - slot_was_set:
     - sleep: false
-  - action: utter_start
+  - action: action_initiate_conversation
+  # - action: utter_start
   - or:
     - intent: affirm
     - intent: deny
   - action: utter_howLongChange
+
+- story: more than week activity
+  steps:
+  - slot_was_set:
+    - sleep: false
+  - action: utter_howLongChange
+  - or:
+    - intent: affirm
+    - intent: notSure
+  - action: utter_howLong
   - intent: score
     entities:
       - value: 1  
   - action: action_scoreAdd
+  - action: utter_askActivity
+
+- story: change less than week activity
+  steps:
+  - slot_was_set:
+    - sleep: false
+  - action: utter_howLongChange
+  - intent: deny
   - action: utter_askActivity
 
 - story: has activity

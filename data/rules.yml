@@ -2,6 +2,12 @@ version: "3.1"
 
 rules:
 
+- rule: greet
+  steps:
+  - intent: greet
+  - action: action_saveUser
+  wait_for_user_input: false
+
 - rule: Say goodbye anytime the user says goodbye
   steps:
   - intent: goodbye
@@ -23,21 +29,6 @@ rules:
   steps:
   - intent: restart
   - action: action_restart
-
-- rule: check
-  steps:
-  - intent: check
-  - action: action_initiate_conversation
-
-# - rule: custom
-#   steps:
-#   - intent: check
-#   - action: action_scoreCheck
-
-# - rule: trigger
-#   steps:
-#   - intent: general
-#   - action: utter_askMood
 
 # - rule: therapy bot
 #   steps: 

@@ -64,8 +64,47 @@ class CustomFallbackAction(Action):
         dispatcher.utter_message("I'm sorry, I didn't understand. Can you please rephrase your message?")
         return [UserUtteranceReverted()]
 
-import requests
+        
+def get_username(sender_id, access_token):
+    # Construct the API request URL
+    url = f"https://graph.facebook.com/{sender_id}?fields=name&access_token={access_token}"
 
+    try:
+        # Send a GET request to the Facebook Graph API
+        response = requests.get(url)
+        data = response.json()
+
+        # Retrieve the username from the response data
+        username = data.get("name")
+
+        return username
+    except requests.exceptions.RequestException as e:
+        # Handle any errors that may occur during the request
+        print(f"Error retrieving user profile: {e}")
+        return None
+
+class ActionSaveUser(Action):
+    def name(self) -> Text:
+        return "action_saveUser"
+
+    def run(self, dispatcher: CollectingDispatcher, 
+            tracker: Tracker, 
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        
+        access_token = os.environ.get("FB_Page_Access_Token")
+        user_id = tracker.sender_id
+        username = get_username(tracker.sender_id, access_token)
+        if (username and not fetchDoc(user_id)):
+            slot = SlotSet("name", username)
+            doc = {
+                "name" : username,
+                "score": 0,
+                "change": " none"
+            }    
+            newDoc(user_id, doc)
+            dispatcher.utter_message("Thank you!")
+
+        return[slot]
 
 class ActionInitiateConversation(Action):
     def name(self) -> Text:
@@ -76,8 +115,12 @@ class ActionInitiateConversation(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
         access_token = os.environ.get("FB_Page_Access_Token")
-        user_id = "USER_FACEBOOK_MESSENGER_ID"
-        message = "Hello, this is a message from the bot!"
+
+        user_id = tracker.sender_id
+
+        name = fetchDoc(user_id).get("name")
+        change = fetchDoc(user_id).get("change")
+        message = "Hello " + name +"!" +"\n I noticed there was a change is your " + change + " is everything okay?"
 
         url = f"https://graph.facebook.com/v13.0/me/messages?access_token={access_token}"
         headers = {"Content-Type": "application/json"}
@@ -88,25 +131,6 @@ class ActionInitiateConversation(Action):
         }
 
         response = requests.post(url, headers=headers, json=payload)
-
-        # # Retrieve the user's Facebook Messenger ID
-        # user_id = tracker.sender_id
-
-        # # Create the message payload
-        # message = Text(text="Hello, this is your chatbot!")
-
-        # # Create the Messenger client
-        # client = MessengerClient(page_access_token=os.environ.get("FB_Page_Access_Token"))
-
-        # # Send the message using the Messenger client
-        # response = client.send(user_id=user_id, message=message)
-
-        # # Handle the response
-        # if response["success"]:
-        #     dispatcher.utter_message(text="Message sent successfully!")
-        # else:
-        #     dispatcher.utter_message(text="Failed to send message.")
-
         return []
 
 class ActionStart(Action):
@@ -118,8 +142,8 @@ class ActionStart(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        # id = tracker.sender_id
-        id = os.environ.get("TestID")
+        id = tracker.sender_id
+        # id = os.environ.get("TestID")
         data = fetchDoc(id)
 
         if(data) :
@@ -147,7 +171,8 @@ class ActionScoreAdd(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         
-        id = os.environ.get("TestID")
+        id = tracker.sender_id
+        # id = os.environ.get("TestID")
         value = tracker.get_slot("value")
         if (value == 0):
             return[] 
@@ -174,8 +199,9 @@ class ActionScoreCheck(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        
-        id = os.environ.get("TestID")
+
+        id = tracker.sender_id
+        # id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             score = data.get("score")
@@ -209,7 +235,8 @@ class ActionScoreFinal(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        id = os.environ.get("TestID")
+        id = tracker.sender_id
+        # id = os.environ.get("TestID")
         data = fetchDoc(id)
         if (data):
             score = data.get("score")

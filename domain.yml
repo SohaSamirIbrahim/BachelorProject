@@ -15,6 +15,7 @@ actions:
 - action_scoreFinal
 - action_default_fallback
 - action_initiate_conversation
+- action_saveUser
 
 entities:
   - value
@@ -82,6 +83,13 @@ intents:
 - therapy
 
 responses:
+  # utter_id:
+  # - text: Find your user ID for an app or game
+# Click your profile picture in the top right of Facebook.
+# Select Settings & privacy, then click Settings.
+# Click Apps and Websites in the left side menu.
+# Click View and Edit next to an app or game.
+# Scroll down to the bottom of the page. Your user ID can be found and copied from this section.
   utter_restart:
   - text: Conversation restarted
   
@@ -93,10 +101,12 @@ responses:
 
   # GENERAL
   utter_howLongChange:
-  - text: How long has this been happening?
+  - text: Has this been happening for more than a week?
+
+
+  utter_howLong:
+  - text: Approximately how long has this been happening?
     buttons:
-    - title: less than a week
-      payload: /score{{"value":0}}
     - title: a week
       payload: /score{{"value":1}}
     - title: 2 weeks
