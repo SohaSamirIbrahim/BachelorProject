@@ -10,9 +10,19 @@ stories:
 #TO DO: develop story where user starts chat
 - story: sad
   steps:
-  - intent: mood_unhappy
+  - intent: greet
   - action: action_saveUser
+  - action: utter_greet
+  - intent: mood_unhappy
   - action: utter_howLongChange
+
+- story: happy
+  steps:
+  - intent: greet
+  - action: action_saveUser
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_goodMood
 
 # SLEEP CONVERSATIONS
 - story: conv sleep start
@@ -303,11 +313,11 @@ stories:
   - intent: general
   - action: utter_askMood
 
-- story: score low say bye
-  steps:
-  - checkpoint: scoreCheck
-  - intent: goodbye
-  - action: utter_goodbye  
+# - story: score low say bye
+#   steps:
+#   - checkpoint: scoreCheck
+#   - intent: goodbye
+#   - action: utter_goodbye  
 
 - story: final score low
   steps:

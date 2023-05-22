@@ -2,6 +2,11 @@ version: "3.1"
 
 rules:
 
+# - rule: start
+#   steps:
+#   - intent: start
+#   - action: action_initiate_conversation
+
 - rule: greet
   steps:
   - intent: greet

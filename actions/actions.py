@@ -198,8 +198,8 @@ class ActionScoreCheck(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        id = tracker.sender_id
-        data = fetchDoc(id)
+        # id = tracker.sender_id
+        data = fetchDoc("9192366324137971")
         if (data):
             score = data.get("score")
             change = data.get("change")
@@ -213,13 +213,15 @@ class ActionScoreCheck(Action):
                 return [ActionExecuted("action_listen"),UserUttered(text="/general", parse_data=dataParse),]
             else:
                 #TO DO: send link to survey chatbot
-                dataParse = {
-                "intent": {
-                    "name": "goodbye",
-                    "confidence": 1.0,
-                    }
-                }
-                return [ActionExecuted("action_listen"),UserUttered(text="/goodbye", parse_data=dataParse),]
+                # dataParse = {
+                # "intent": {
+                #     "name": "goodbye",
+                #     "confidence": 1.0,
+                #     }
+                # }
+                link_url = "https://www.youtube.com/"
+                dispatcher.utter_message(text= f"Visit ({link_url}).", parse_mode="Markdown")
+                # return [ActionExecuted("action_listen"),UserUttered(text="/goodbye", parse_data=dataParse),]
         else:
             dispatcher.utter_message("Error")
         
