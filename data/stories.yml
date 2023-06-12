@@ -7,6 +7,8 @@ stories:
   - intent: greet
   - action: action_saveUser
 
+# TODO: develop chitchat stories
+
 #TO DO: develop story where user starts chat
 - story: sad
   steps:
@@ -24,6 +26,63 @@ stories:
   - intent: mood_great
   - action: utter_goodMood
 
+- story: evrything good
+  steps:
+  - action: action_initiate_conversation
+  - or:
+    - intent: affirm
+    - intent: everythingFine
+  - action: utter_goodChange
+  - action: utter_askPermission
+
+- story: everyhting not good
+  steps:
+  - action: action_initiate_conversation
+  - or:
+    - intent: deny
+    - intent: everythingNotFine
+  - action: utter_badChange
+
+- story: agree badchange
+  steps:
+  - action: utter_badChange
+  - or:
+    - intent: affirm
+    - intent: permission
+  - action: utter_howLongChange
+
+- story: disagree badchange
+  steps:
+  - action: utter_badChange
+  - or:
+    - intent: deny
+    - intent: noPermission
+  - action: utter_persuad
+  - or:
+    - intent: affirm
+    - intent: permission
+  - action: utter_howLongChange
+
+- story: yes permission
+  steps:
+  - action: utter_askPermission
+  - or:
+    - intent: affirm
+    - intent: permission
+  - action: utter_howLongChange
+
+- story: no permission
+  steps:
+  - action: utter_askPermission
+  - or:
+    - intent: deny
+    - intent: noPermission
+  - action: utter_persuad
+  - or:
+    - intent: affirm
+    - intent: permission
+  - action: utter_howLongChange
+
 # SLEEP CONVERSATIONS
 - story: conv sleep start
   steps:
@@ -31,10 +90,6 @@ stories:
   - slot_was_set:
     - sleep: true
   - action: action_initiate_conversation
-  - or:
-    - intent: affirm
-    - intent: deny
-  - action: utter_howLongChange
 
 - story: less than week sleep
   steps:
@@ -67,19 +122,30 @@ stories:
   - or:
     - intent: affirm
     - intent: notSure
-  - action: utter_askSleepHours
+    - intent: sleepMore8
+  - action: utter_askHypersomnia
   - intent: score
     entities:
       - value: 1  
   - action: action_scoreAdd
-  - action: utter_askSleepTrouble
+  - action: utter_askMood
+
+- story: sleeps less
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_askSleep
+  - intent: sleepLess8
+  - action: utter_askOnsetIns
 
 - story: sleeps 8 hours or less
   steps:
   - slot_was_set:
     - sleep: true
   - action: utter_askSleep
-  - intent: deny
+  - or:
+    - intent: deny
+    - intent: sleepIrregular
   - action: utter_askSleepTrouble
 
 - story: has sleep trouble
@@ -91,12 +157,13 @@ stories:
     - intent: troubleSleep
     - intent: affirm
     - intent: notSure
-  - action: utter_askSleepTroubleTime
+  - action: utter_askOnsetIns
   - intent: score
     entities:
       - value: 1  
   - action: action_scoreAdd
-  - action: utter_askSleepWakeup
+  - action: utter_askWakeupEarly
+  # - action: utter_askSleepWakeup
 
 - story: has no sleep trouble
   steps:
@@ -106,6 +173,30 @@ stories:
   - or:
     - intent: noTroubleSleep
     - intent: deny
+  - action: utter_askWakeupEarly
+  # - action: utter_askSleepWakeup
+
+- story: doesn't wakeup early
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_askWakeupEarly
+  - intent: deny
+  - action: utter_askSleepWakeup
+
+- story: wakeup early
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_askWakeupEarly
+  - or:
+    - intent: notSure
+    - intent: affirm
+  - action: utter_askMorningIns
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd
   - action: utter_askSleepWakeup
 
 - story: has wakeup trouble
@@ -117,7 +208,7 @@ stories:
     - intent: troubleSleep
     - intent: affirm 
     - intent: notSure
-  - action: utter_askSleepWakeupTime
+  - action: utter_askMidIns
   - intent: score
     entities:
       - value: 1  
@@ -147,10 +238,6 @@ stories:
   - slot_was_set:
     - sleep: false
   - action: action_initiate_conversation
-  - or:
-    - intent: affirm
-    - intent: deny
-  - action: utter_howLongChange
 
 - story: more than week activity
   steps:
@@ -313,23 +400,23 @@ stories:
   - intent: general
   - action: utter_askMood
 
-# - story: score low say bye
-#   steps:
-#   - checkpoint: scoreCheck
-#   - intent: goodbye
-#   - action: utter_goodbye  
+- story: score low say bye
+  steps:
+  - checkpoint: scoreCheck
+  - intent: checklater
+  - action: utter_checkLater  
 
 - story: final score low
   steps:
   - checkpoint: finalScore
-  - intent: goodbye
-  - action: utter_goodbye
+  - intent: checklater
+  - action: utter_checkLater  
 
 - story: final score high
   steps:
   - checkpoint: finalScore
   - intent: therapy
-  - action: utter_cheer_up
+  - action: utter_therapy
 
 # END SCORE CHECKS
 
@@ -445,6 +532,7 @@ stories:
   - or:
     - intent: affirm
     - intent: notSure
+    - intent: pessimistic
   - action: utter_askPessimistic
   - intent: score
     entities:
@@ -455,13 +543,18 @@ stories:
 - story: is not pessimistic
   steps:
   - action: utter_askFuture
-  - intent: deny
+  - or:
+    - intent: optimistic
+    - intent: deny
   - action: utter_askWeight
 
 - story: no weight change
   steps:
   - action: utter_askWeight
-  - intent: deny
+  - or:
+    - intent: notSure
+    - intent: noWeightChange
+    - intent: deny
   - action: utter_askAppetite
 
 - story: weight change
@@ -470,6 +563,7 @@ stories:
   - or:
     - intent: notSure
     - intent: affirm
+    - intent: weightChange
   - action: utter_askWeightIncOrDec
 
 - story: weight increase

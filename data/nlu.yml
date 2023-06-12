@@ -101,6 +101,7 @@ nlu:
     - yes it changed
     - yes it has changed
     - yes it has
+    - okay
 
 - intent: troubleSleep
   examples: |
@@ -126,9 +127,64 @@ nlu:
 - intent: everythingFine
   examples: |
     - everything is fine
-    - fine
     - everything's good
     - i'm okay
+    - everything is okay
+    - all good
+    - superb
+    - nothing going on all good
+    - yes everything is good
+
+- intent: everythingNotFine
+  examples: |
+    - everything is not fine
+    - not good
+    - i am not good
+    - everything is not okay
+
+- intent: permission
+  examples: |
+    - sure go ahead
+    - go ahead
+    - ask
+    - you can ask
+    - it's okay to ask
+    - yes you can ask
+    - go ahead ask
+    - that would be alright
+    - that would be okay
+    - ask me
+    - you can
+    - yes you can
+    - you may
+    - yes you may
+    - okay with me
+    - fine with me
+    - i would be okay
+    - yes i would 
+    - yes i would be okay with that
+
+- intent: noPermission
+  examples: |
+    - no don't
+    - don't ask
+    - not in the mood for questions
+    - i don't want to be asked
+    - i don't want to answer
+    - no questions
+    - no asking
+    - you may not
+    - you can not
+    - not okay with me
+    - i would not be okay
+    - no i won't be okay
+    - i won't be okay with that
+    - no you cannot
+    - i would not be okay with that
+    - i don't want questions
+    - no it will not be alright
+    - no it wouldn't
+    - no it wouldn't be okay
 
 - intent: deny
   examples: |
@@ -172,7 +228,8 @@ nlu:
     - there was no change
     - no it didn't change
     - it didn't
-    - didn't occur    
+    - didn't occur 
+    - not it is not okay   
 
 - intent: notSure
   examples: |
@@ -189,6 +246,8 @@ nlu:
     - no clue
     - i don't have a clue
     - i have no clue
+    - Can't say for sure.
+    - Unsure.
 
 - intent: reasonActivity
   examples: |
@@ -207,6 +266,11 @@ nlu:
     - i was tired
     - emotionally tired
     - don't want to see people
+    - busy
+    - no time
+    - not enough time
+    - always busy
+    - alot of work
     
 - intent: mood_great
   examples: |
@@ -237,6 +301,19 @@ nlu:
     - spectacular
     - great
     - no i feel great 
+    - I'm feeling great today!
+    - I'm in a positive and cheerful mood.
+    - I'm feeling happy and content.
+    - I'm having a fantastic day!
+    - I'm feeling upbeat and optimistic.
+    - Feeling great!
+    - Positive and cheerful
+    - Happy and content
+    - Fantastic day!
+    - Upbeat and optimistic
+    - happy
+    - fantastic
+    - content
 
 - intent: mood_unhappy
   examples: |
@@ -269,6 +346,21 @@ nlu:
     - have been feeling down
     - have been feeling sad
     - always down
+    - I'm feeling down today
+    - down
+    - blue
+    - abit down
+    - a bit blue
+    - I'm in a bit of a low mood
+    - I'm feeling sad and a bit blue
+    - I'm having a rough day emotionally
+    - rough day
+    - Feeling down
+    - Bit low
+    - Sad and blue
+    - Rough day emotionally
+    - A bit downhearted
+    - down and sad alot
 
 - intent: energyTired
   examples: |
@@ -282,7 +374,6 @@ nlu:
 - intent: increase
   examples: |
     - it increased
-    - i gained weight
     - became higher
     - increased
     - gained
@@ -317,4 +408,131 @@ nlu:
     - are you human?
     - who am i talking to?
     - are you a person?
+
+- intent: sleepMore8
+  examples: |
+    - yes i slept more than 8 hours
+    - Yes, I have been sleeping more than 8 hours a night, including naps.
+    - Some nights I sleep more than 8 hours, but not every night.
+    - I'm not sure, my sleep patterns have been inconsistent.
+    - My sleep duration varies from day to day.
+    - I find it difficult to track my sleep patterns accurately.
+    - I have been experiencing sleep disturbances and have trouble getting restful sleep.
+    - My sleep schedule has been disrupted recently due to various factors.
+    - I make an effort to prioritize my sleep and ensure I get more than 8 hours.
+    - I haven't been keeping track of my sleep duration.
+    - I often oversleep and find it hard to wake up in the morning.
+    - slept more than
+    - Absolutely, my sleep duration has been consistently over 8 hours in the past week.
+    - Definitely, I have been getting plenty of sleep, exceeding 8 hours a night on average.
+    - Yes, I have made it a priority to get sufficient sleep, and it has been more than 8 hours.
+
+- intent: sleepIrregular
+  examples: |
+    - my sleep is irregular
+    - i have irregular sleep
+    - inconsistent sleep
+    - My sleep schedule has been all over the place.
+    - Some nights I sleep well, but other nights I struggle to get any rest.
+    - I often have trouble falling asleep or staying asleep.
+    - My sleep patterns are unpredictable and inconsistent.
+    - I've noticed that my sleep quality has been fluctuating lately.
+    - my sleep is fluctutating
+    - my sleep is not regular 
+
+- intent: sleepLess8
+  examples: |
+    - My sleep habits have been affected by stress or other external factors.
+    - no less
+    - i slept less
+    - No, I have not been sleeping more than 8 hours a night, including naps.
+    - I struggle to get enough sleep, often sleeping less than 8 hours.
+    - Not at all, my sleep duration has been less than 8 hours on average.
+    - No, I have been struggling to get enough sleep and it's been less than 8 hours.
+    - i sleep way less
+    - i struggle to get sleep
+    - no i struggle to get sleep
+    - i always sleep less
+    - i never sleep that much
+    - i don't sleep much
+    - i rarely sleep
+    - i don't sleep
+    - i sleep less than 8 hours
+
+- intent: pessimistic
+  examples: |
+    - Yes, I've been feeling quite pessimistic lately
+    - Unfortunately, I have been feeling pessimistic about what lies ahead
+    - Indeed, I've been having a negative outlook on the future
+    - always pessimistic
+    - extremely pessimistic
+    - always pessimistic
+    - feeling pessimistic yes
+    - I'm somewhat torn between feeling pessimistic and staying hopeful.
+    - It's a mix of emotions—I can't quite pinpoint if it's pessimism or just a passing mood.
+    - sometimes i am cometimes i'm not
+    - Sometimes I lean towards pessimism, but I try to maintain a balanced perspective
+
+- intent: optimistic
+  examples: |
+    - Not really, I try to focus on the brighter side of things
+    - I'm generally an optimistic person, so pessimism doesn't come easily to me
+    - I believe in finding silver linings even in challenging situations
+    - no i am mostly optimistic
+    - mostly optimistic
+    - i look on the bright side
+    - i always find hope
+    - my outlook is positive
+    - No, I'm actually quite optimistic despite the challenges
+    - Not really, I try to maintain a positive mindset
+    - I don't let pessimism get the best of me
+    - no i'm more optimistic
+    - no i'm optimistic
+    - i'm optimistic
+    - optimistic
+
+- intent: weightChange
+  examples: |
+    - Yes, I've noticed a significant change in my weight recently
+    - Absolutely, my weight has been fluctuating quite a bit
+    - Indeed, there has been a noticeable change in my weight
+    - significantly changed
+    - there is a noticeable change
+    - changed a little
+    - fluctuating weight
+    - it varies
+    - changed a little yes
+    - it did change
+
+- intent: noWeightChange
+  examples: |
+    - No, my weight has remained relatively stable
+    - Not at all, my weight has stayed the same
+    - I haven't experienced any noticeable changes in my weight
+    - no it didn't change
+    - my weight is the same
+    - same weight
+    - same as before
+    - no noticeable change
+    - stayed the same
+    - no change
+    - no weight change
+
+- intent: weightGain
+  examples: |
+    - i gained weight
+    - my weight increased
+    - i have put on some weight
+    - i did become fat
+    - fatter
+    - i gained some weight
+    - my weight increased slightly
+    - slight increase
+    - slight gain
+    - i gained a little
+    - i did have a noticable increase in my weight
+    - i did gain some weight in the past week
+    - gained some
+    - put on some more
+    - put on weight
 

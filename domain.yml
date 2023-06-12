@@ -4,7 +4,6 @@ actions:
 # Utterrances
 - utter_start
 - utter_howLongChange
-- utter_askchangenormal
 - utter_askSleep
 - utter_askSleepTrouble
 # Custom Actions
@@ -64,7 +63,6 @@ intents:
 - affirm
 - bot_challenge
 - deny
-- everythingFine
 - goodbye
 - greet
 - mood_great
@@ -81,14 +79,44 @@ intents:
 - increase
 - decrease
 - therapy
+- everythingFine
+- everythingNotFine
+- permission
+- noPermission
+- energyTired
+- sleepMore8
+- sleepLess8
+- sleepIrregular
+- pessimistic
+- optimistic
+- weightChange
+- noWeightChange
+- checklater
 
 responses:
+
+  utter_welcome:
+  - text: Welcome to the Depression Assessment Chatbot. Our goal is to better understand your current state of mind so that we can provide personalized support and recommendations. Your honest answers will enable us to gain insights into your unique needs and offer you more personalized guidance.
   
+  utter_askPermission:
+  - text: I hope you don't mind if I ask a few questions to better understand. It will only take 5 minutes of your time. Is that okay with you?
+  - text: Would you be okay with me asking a few questions to get a better understanding of how I can assist you? It will only take 5 minutes of your time.
+  - text: I want to make sure I'm offering you the right guidance. Can I ask you a few questions? It will only take 5 minutes of your time
+
+  utter_persuad:
+  - text: By answering a few questions, you'll contribute to a more accurate understanding of your situation, allowing us to provide personalized support. Your participation can make a difference and lead to valuable insights. Will you please take a few moments to answer these questions?
+
+  utter_badChange:
+  - text: I'm really sorry to hear that. I'm here to help, but I may need to ask you some questions to provide the best support. Would that be alright?
+  
+  utter_goodChange:
+  - text: Good to hear this!
+  - text: Glad to hear that everything is fine!
+  - text: That is good!
+  - text: Great!
+
   utter_start:
   - text: I noticed there was a change in your {change} is everything okay?
-
-  utter_askchangenormal:
-  - text: Is this change normal for you?
 
   # GENERAL
   utter_howLongChange:
@@ -97,11 +125,11 @@ responses:
   utter_howLong:
   - text: Approximately how long has this been happening?
     buttons:
-    - title: a week
+    - title: A week
       payload: /score{{"value":1}}
     - title: 2 weeks
       payload: /score{{"value":2}}
-    - title: more than 2 weeks
+    - title: More than 2 weeks
       payload: /score{{"value":3}}
   
   utter_askMood:
@@ -110,11 +138,11 @@ responses:
   utter_howOftenMood: 
   - text: How often have you felt like this?
     buttons:
-    - title: less than half the time
+    - title: Less than half the time
       payload: /score{{"value":1}}
-    - title: more than half the time
+    - title: More than half the time
       payload: /score{{"value":2}}
-    - title: almost all the time
+    - title: All the time
       payload: /score{{"value":3}}
   
   utter_askFuture:
@@ -123,11 +151,11 @@ responses:
   utter_askPessimistic:
   - text: How often have you been feeling pessimistic?
     buttons:
-    - title: ocassionaly pessimistic
+    - title: Ocassionaly pessimistic
       payload: /score{{"value":1}}
-    - title: mostly pessimistic
+    - title: Mostly pessimistic
       payload: /score{{"value":2}}
-    - title: extremely pessimistic/ see no hope
+    - title: Extremely pessimistic
       payload: /score{{"value":3}}
 
   utter_askWeight:
@@ -165,9 +193,9 @@ responses:
   utter_askAppetiteDec:
   - text: How much less is your appetite comapred to normal?
     buttons:
-    - title: Eat less amounts or less often than usual
+    - title: Less amounts/less often
       payload: /score{{"value":1}}
-    - title: Eat much less than normal and with personal effort
+    - title: Eat less with effort
       payload: /score{{"value":2}}
     - title: Rarely eat
       payload: /score{{"value":3}}
@@ -175,11 +203,11 @@ responses:
   utter_askAppetiteInc:
   - text: How much has your appetite increased comapred to normal?
     buttons:
-    - title: Eat more frequently than normal
+    - title: More frequently
       payload: /score{{"value":1}}
-    - title: Regularly eat more often with greater amounts of food than usual
+    - title: More often, greater amounts
       payload: /score{{"value":2}}
-    - title: Overeat both at mealtime and between meals
+    - title: Overeat at mealtime &between meals
       payload: /score{{"value":3}}
 
   utter_askAnxious:
@@ -188,11 +216,11 @@ responses:
   utter_askAnxiousTime:
   - text: Approximately how much of the time the last week have you been feeling anxious?
     buttons:
-    - title: less than half the time
+    - title: Less than half the time
       payload: /score{{"value":1}}
-    - title: more than half the time
+    - title: More than half the time
       payload: /score{{"value":2}}
-    - title:  extremely anxious virtually all of the time
+    - title: All of the time
       payload: /score{{"value":3}}
 
   utter_askIrritable:
@@ -201,11 +229,11 @@ responses:
   utter_askIrritableTime:
   - text: How much of the time in the past week have you been feeling especially irritable?
     buttons:
-    - title: less than half the time
+    - title: Less than half the time
       payload: /score{{"value":1}}
-    - title: more than half the time
+    - title: More than half the time
       payload: /score{{"value":2}}
-    - title:  extremely irritable virtually all of the time
+    - title: All of the time
       payload: /score{{"value":3}}
   
   utter_askSlowedDown:
@@ -216,9 +244,9 @@ responses:
     buttons:
     - title: Slowed thinking
       payload: /score{{"value":1}}
-    - title: Take several seconds to respond to most questions
+    - title: Take several seconds
       payload: /score{{"value":2}}
-    - title: Largely unresponsive to most questions
+    - title: Largely unresponsive 
       payload: /score{{"value":3}}
 
   utter_askConcentration:
@@ -227,11 +255,11 @@ responses:
   utter_askConcentrationTrouble:
   - text : How bad is it?
     buttons:
-    - title: Attention wanders occasionally
+    - title: Attention wanders a bit
       payload: /score{{"value":1}}
-    - title: Struggle to focus or make a decision 
+    - title: Struggle to focus 
       payload: /score{{"value":2}}
-    - title: Cannot concentrate well enough to read or cannot make even minor decisions
+    - title: Cannot concentrate 
       payload: /score{{"value":3}}
 
   # END GENERAL
@@ -241,41 +269,53 @@ responses:
   utter_askSleep:
   - text: On average have you been sleeping more than 8 hours a night in the past week including naps?
 
-  utter_askSleepHours:
+  utter_askHypersomnia: #hypersomnia
   - text: How many hours on average have you been sleeping in a 24-hour period in the past week, including naps?
     buttons:
     - title: 10 hours a day
       payload: /score{{"value":1}}
     - title: 12 hours a day
       payload: /score{{"value":2}}
-    - title: more than 12 hours a day
+    - title: More than 12 hours
       payload: /score{{"value":3}}
   
-  utter_askSleepTrouble:
+  utter_askSleepTrouble: #Onset Insomnia
   - text: Have you had any trouble falling asleep? 
 
-  utter_askSleepTroubleTime:
+  utter_askOnsetIns:
   - text: How long on average does it take you to fall asleep?
     buttons:
-    - title: 30 minutes less than half of the time
+    - title: 30 mins half the time
       payload: /score{{"value":1}}
-    - title: 30 minutes most of the time
+    - title: 30 mins most times
       payload: /score{{"value":2}}
-    - title: more than 60 minutes most of the time
+    - title: More than 60 minutes 
+      payload: /score{{"value":3}}
+
+  utter_askWakeupEarly:
+  - text: Have you found yourself waking up earlier than usual this past week?
+
+  utter_askMorningIns: # early morning Insomnia
+  - text: How much earlier do you wakeup before necessary?
+    buttons:
+    - title: More than 30 mins 
+      payload: /score{{"value":1}}
+    - title: At least 1 hour before
+      payload: /score{{"value":2}}
+    - title: At least 2 hours before 
       payload: /score{{"value":3}}
   
- ## MODIFY PHRASING
-  utter_askSleepWakeup:
-  - text: Have you been waking up in the middle of the night?
+  utter_askSleepWakeup: #Mid-Nocturnal Insomnia
+  - text: Has your sleep been restless or disturbed some nights?
 
-  utter_askSleepWakeupTime:
-  - text: How often do you wakeup?
+  utter_askMidIns:
+  - text: How often do you wakeup during the night?
     buttons:
-    - title: just light sleep
+    - title: Just light sleep
       payload: /score{{"value":1}}
-    - title: at least once a night 
+    - title: At least once
       payload: /score{{"value":2}}
-    - title: more than once a night and stay awake
+    - title: More than once
       payload: /score{{"value":3}}
   #END SLEEP
 
@@ -291,46 +331,46 @@ responses:
   - text: Why is that?
   - text: Why not?
 
-  utter_askActivityEnjoy:
+  utter_askActivityEnjoy: #pleasure/enjoyment
   - text: Compared to your usual, was there a change in how you enjoyed these activities?
 
   utter_askActivityEnjoyLess:
   - text: How have you enjoyed these activities compared to usual?
     buttons:
-    - title: Do not feel the same enjoynment as usual
+    - title: Not as usual
       payload: /score{{"value":1}}
-    - title: Rarely enjoy an acitvity i once enjoyed
+    - title: Rarely enjoy an acitvity
       payload: /score{{"value":2}}
-    - title: Unable to enjoy any activity done
+    - title: Unable to enjoy any
       payload: /score{{"value":3}}
 
-  utter_askInterest:
+  utter_askInterest: #Involvement
   - text: Have you noticed any change in your level of interest and motivation for completing daily activities?
 
   utter_askInterestLevel:
   - text: How would you describe your level of interest and motivation to complete daily activities?
     buttons:
-    - title: Slight reduction in former interests/activities
+    - title: Slight reduction 
       payload: /score{{"value":1}}
-    - title: Only one or two former interests remain 
+    - title: Only few interests remain 
       payload: /score{{"value":2}}
-    - title: No interest in formerly pursued activities
+    - title: No interest 
       payload: /score{{"value":3}}
 
-  utter_askEnergy:
+  utter_askEnergy: #energy/fatigue
   - text: Have you noticed a change in you energy this past week?
 
   utter_askTired:
   - text: How bad has it been?
     buttons:
-    - title: tire easily most of the time
+    - title: Tire easily 
       payload: /score{{"value":1}}
-    - title: effort to maintain activity
+    - title: Effort to maintain activity
       payload: /score{{"value":2}}
-    - title: unable to carry activity due to lack of energy
+    - title: Unable to carry activity
       payload: /score{{"value":3}}
 
-  utter_askPhysicalEnergy:
+  utter_askPhysicalEnergy: #leaden paralysis
   - text: During the past week, have you had feelings of being weighted down, like you had weights on your arms and legs?
 
   utter_askPhysicalEnergyInterfere:
@@ -341,7 +381,7 @@ responses:
     buttons:
     - title: More than half the time 
       payload: /score{{"value":2}}
-    - title: Virtually all the time, several hours per day
+    - title: All the time
       payload: /score{{"value":3}}
  
 
@@ -367,17 +407,21 @@ responses:
   - text: Awesome!
 
   utter_goodbye:
-  # - text: Bye
   - text: See you soon!
-  # - text: Bye Bye
   - text: Talk to you soon. Take care!
   - text: Have a great day!
   - text: Great! Will talk to you soon!
   - text: Will check up on you later, take care!
 
+  utter_checkLater:
+  - text: Will check up on you later, take care!
+
   utter_iamabot:
-  - text: I am a bot here to help you.
+  - text: Well, I'm not your typical bot. Think of me as a friendly virtual assistant here to lend a hand! 
+
+  utter_therapy:
+  - text: Another chatbot is now in charge. They will assist you further. Thank you!
 
 session_config:
   session_expiration_time: 60
-  carry_over_slots_to_new_session: false
+  carry_over_slots_to_new_session: true

@@ -9,7 +9,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, Restarted, UserUtteranceReverted, UserUttered, ActionExecuted
+from rasa_sdk.events import SlotSet, Restarted, UserUtteranceReverted, UserUttered, ActionExecuted, ConversationPaused
 
 import firebase_admin
 from firebase_admin import firestore
@@ -66,11 +66,9 @@ class CustomFallbackAction(Action):
 
         
 def get_username(sender_id, access_token):
-    # Construct the API request URL
     url = f"https://graph.facebook.com/{sender_id}?fields=name&access_token={access_token}"
 
     try:
-        # Send a GET request to the Facebook Graph API
         response = requests.get(url)
         data = response.json()
 
@@ -79,7 +77,6 @@ def get_username(sender_id, access_token):
 
         return username
     except requests.exceptions.RequestException as e:
-        # Handle any errors that may occur during the request
         print(f"Error retrieving user profile: {e}")
         return None
 
@@ -120,7 +117,7 @@ class ActionInitiateConversation(Action):
 
         name = fetchDoc(user_id).get("name")
         change = fetchDoc(user_id).get("change")
-        message = "Hello " + name +"!" +"\n I noticed there was a change is your " + change + " is everything okay?"
+        message = "Hello " + name +"!" +"\n I noticed there was a change in your " + change + " is everything okay?"
 
         url = f"https://graph.facebook.com/v13.0/me/messages?access_token={access_token}"
         headers = {"Content-Type": "application/json"}
@@ -198,12 +195,12 @@ class ActionScoreCheck(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        # id = tracker.sender_id
-        data = fetchDoc("9192366324137971")
+        id = tracker.sender_id
+        data = fetchDoc(id)
         if (data):
             score = data.get("score")
             change = data.get("change")
-            if((score> 3 and change == "sleep") or (score > 5 and change == "activity") ):
+            if(score > 4 ):
                 dataParse = {
                 "intent": {
                     "name": "general",
@@ -212,16 +209,13 @@ class ActionScoreCheck(Action):
                 }
                 return [ActionExecuted("action_listen"),UserUttered(text="/general", parse_data=dataParse),]
             else:
-                #TO DO: send link to survey chatbot
-                # dataParse = {
-                # "intent": {
-                #     "name": "goodbye",
-                #     "confidence": 1.0,
-                #     }
-                # }
-                link_url = "https://www.youtube.com/"
-                dispatcher.utter_message(text= f"Visit ({link_url}).", parse_mode="Markdown")
-                # return [ActionExecuted("action_listen"),UserUttered(text="/goodbye", parse_data=dataParse),]
+                dataParse = {
+                "intent": {
+                    "name": "checklater",
+                    "confidence": 1.0,
+                    }
+                }
+                return [ActionExecuted("action_listen"),UserUttered(text="/checklater", parse_data=dataParse),]
         else:
             dispatcher.utter_message("Error")
         
@@ -251,12 +245,11 @@ class ActionScoreFinal(Action):
                 return [ActionExecuted("action_listen"),UserUttered(text="/therapy", parse_data=dataParse),]
 
             else:
-                #TO DO: send link to survey chatbot
                 dataParse = {
                 "intent": {
-                    "name": "goodbye",
+                    "name": "checklater",
                     "confidence": 1.0,
                     }
                 }
-                return [ActionExecuted("action_listen"),UserUttered(text="/goodbye", parse_data=dataParse),]
-        return []
+                return [ActionExecuted("action_listen"),UserUttered(text="/checklater", parse_data=dataParse),]
+        return [ConversationPaused()]

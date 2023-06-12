@@ -35,6 +35,11 @@ rules:
   - intent: restart
   - action: action_restart
 
+- rule: fallback
+  steps:
+  - intent: nlu_fallback
+  - action: action_default_fallback
+
 # - rule: therapy bot
 #   steps: 
 #   - intent: therapy
