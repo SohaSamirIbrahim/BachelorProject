@@ -13,6 +13,7 @@ nlu:
 - intent: start
   examples: |
     - start
+    - start again 
 
 - intent: greet
   examples: |
@@ -163,6 +164,7 @@ nlu:
     - i would be okay
     - yes i would 
     - yes i would be okay with that
+    - i guess
 
 - intent: noPermission
   examples: |
@@ -185,6 +187,8 @@ nlu:
     - no it will not be alright
     - no it wouldn't
     - no it wouldn't be okay
+    - i don't like questions
+    - i hate questions
 
 - intent: deny
   examples: |

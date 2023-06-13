@@ -15,17 +15,25 @@ actions:
 - action_default_fallback
 - action_initiate_conversation
 - action_saveUser
+# - action_unlikely_intent
 
 entities:
   - value
+  # - general
 
 slots:
+  general: 
+    type: bool
+    influence_conversation: True
+    initial_value: False
+    mappings:
+    - type: custom
+      
   sleep: 
     type: bool
     influence_conversation: True
     mappings:
     - type: custom
-      action: action_start
 
   change:
     type: categorical
@@ -91,6 +99,7 @@ intents:
 - optimistic
 - weightChange
 - noWeightChange
+- weightGain
 - checklater
 
 responses:

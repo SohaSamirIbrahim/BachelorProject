@@ -9,7 +9,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet, Restarted, UserUtteranceReverted, UserUttered, ActionExecuted, ConversationPaused
+from rasa_sdk.events import SlotSet, Restarted, UserUtteranceReverted, UserUttered, ActionExecuted, ConversationPaused, SessionStarted
 
 import firebase_admin
 from firebase_admin import firestore
@@ -49,7 +49,8 @@ class ActionRestart(Action):
   async def run(self, dispatcher, 
             tracker: Tracker, 
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
+        id = tracker.sender_id
+        updateDoc(id, "score" , 0)
         dispatcher.utter_message("Conversation was restarted.")
         return [Restarted()]
 
@@ -63,6 +64,18 @@ class CustomFallbackAction(Action):
 
         dispatcher.utter_message("I'm sorry, I didn't understand. Can you please rephrase your message?")
         return [UserUtteranceReverted()]
+    
+# class ActionUnlikelyIntent(Action):
+
+#     def name(self) -> Text:
+#         return "action_unlikely_intent"
+
+#     async def run(
+#         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any],
+#     ) -> List[Dict[Text, Any]]:
+
+#         dispatcher.utter_message("Apologies, but your response seems unrelated to the question asked. Could you please provide a relevant answer? Thank you.")
+#         return [UserUtteranceReverted()]
 
         
 def get_username(sender_id, access_token):
@@ -129,6 +142,17 @@ class ActionInitiateConversation(Action):
 
         response = requests.post(url, headers=headers, json=payload)
         return []
+    
+# class ActionSessionStart(Action):
+
+#   def name(self) -> Text:
+#       return "action_session_start"
+
+#   async def run(self, dispatcher,  tracker: Tracker, domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+#     slot = SlotSet("start", True)
+
+#     return [slot, SessionStarted()]
 
 class ActionStart(Action):
 
@@ -146,6 +170,8 @@ class ActionStart(Action):
             name = data.get("name")
             change = data.get("change")
             score = data.get("score")
+            # if(score > 0):
+            #     # Create New Score Field in DB
             slot1= SlotSet("score", score)
             slot2= SlotSet("name", name)
             slot3= SlotSet("change", change)
@@ -201,13 +227,14 @@ class ActionScoreCheck(Action):
             score = data.get("score")
             change = data.get("change")
             if(score > 4 ):
+                slot = SlotSet("general", True)
                 dataParse = {
                 "intent": {
                     "name": "general",
                     "confidence": 1.0,
                     }
                 }
-                return [ActionExecuted("action_listen"),UserUttered(text="/general", parse_data=dataParse),]
+                return [ActionExecuted("action_listen"),UserUttered(text="/general", parse_data=dataParse),slot]
             else:
                 dataParse = {
                 "intent": {
@@ -215,7 +242,7 @@ class ActionScoreCheck(Action):
                     "confidence": 1.0,
                     }
                 }
-                return [ActionExecuted("action_listen"),UserUttered(text="/checklater", parse_data=dataParse),]
+                return [ActionExecuted("action_listen"),UserUttered(text="/checklater", parse_data=dataParse),ConversationPaused()]
         else:
             dispatcher.utter_message("Error")
         

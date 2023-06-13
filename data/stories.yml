@@ -26,6 +26,7 @@ stories:
   - intent: mood_great
   - action: utter_goodMood
 
+# Chatbot starts conversation
 - story: evrything good
   steps:
   - action: action_initiate_conversation
@@ -43,7 +44,7 @@ stories:
     - intent: everythingNotFine
   - action: utter_badChange
 
-- story: agree badchange
+- story: badchange permission
   steps:
   - action: utter_badChange
   - or:
@@ -51,17 +52,17 @@ stories:
     - intent: permission
   - action: utter_howLongChange
 
-- story: disagree badchange
+- story: badchange no permission
   steps:
   - action: utter_badChange
   - or:
     - intent: deny
     - intent: noPermission
   - action: utter_persuad
-  - or:
-    - intent: affirm
-    - intent: permission
-  - action: utter_howLongChange
+  # - or:
+  #   - intent: affirm
+  #   - intent: permission
+  # - action: utter_howLongChange
 
 - story: yes permission
   steps:
@@ -78,10 +79,26 @@ stories:
     - intent: deny
     - intent: noPermission
   - action: utter_persuad
+  # - or:
+  #   - intent: affirm
+  #   - intent: permission
+  # - action: utter_howLongChange
+
+- story: persuaded
+  steps:
+  - action: utter_persuad
   - or:
     - intent: affirm
     - intent: permission
   - action: utter_howLongChange
+
+- story: not persuaded
+  steps:
+  - action: utter_persuad
+  - or:
+    - intent: deny
+    - intent: noPermission
+  - action: utter_checkLater
 
 # SLEEP CONVERSATIONS
 - story: conv sleep start
@@ -135,8 +152,10 @@ stories:
   - slot_was_set:
     - sleep: true
   - action: utter_askSleep
-  - intent: sleepLess8
-  - action: utter_askOnsetIns
+  - or:
+    - intent: deny
+    - intent: sleepLess8
+  - action: utter_askSleepTrouble
 
 - story: sleeps 8 hours or less
   steps:
@@ -397,6 +416,8 @@ stories:
 - story: score high ask general
   steps:
   - checkpoint: scoreCheck
+  - slot_was_set:
+    - general: true
   - intent: general
   - action: utter_askMood
 
@@ -425,6 +446,8 @@ stories:
 
 - story: good mood
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askMood
   - or:
     - intent: mood_great
@@ -433,6 +456,8 @@ stories:
 
 - story: bad mood
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askMood
   - or:
     - intent: mood_unhappy
@@ -447,6 +472,8 @@ stories:
 
 - story: is anxious
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askAnxious
   - or:
     - intent: affirm
@@ -460,12 +487,16 @@ stories:
 
 - story: is not anxious
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askAnxious
   - intent: deny
   - action: utter_askIrritable
 
 - story: is irritable
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askIrritable
   - or:
     - intent: affirm
@@ -479,24 +510,32 @@ stories:
 
 - story: is not irritable
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askIrritable
   - intent: deny
   - action: utter_askSlowedDown
 
 - story: is not slowed down
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askSlowedDown
   - intent: deny
   - action: utter_askConcentration
 
 - story: can concentrate
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askConcentration
   - intent: deny
   - action: utter_askFuture
 
 - story: cannot concentrate
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askConcentration
   - or:
     - intent: affirm
@@ -510,6 +549,8 @@ stories:
 
 - story: is slowed down
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askSlowedDown
   - or:
     - intent: affirm
@@ -528,6 +569,8 @@ stories:
 
 - story: is pessmitstic
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askFuture
   - or:
     - intent: affirm
@@ -542,6 +585,8 @@ stories:
 
 - story: is not pessimistic
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askFuture
   - or:
     - intent: optimistic
@@ -551,6 +596,8 @@ stories:
 - story: no weight change
   steps:
   - action: utter_askWeight
+  - slot_was_set:
+    - general: true
   - or:
     - intent: notSure
     - intent: noWeightChange
@@ -560,6 +607,8 @@ stories:
 - story: weight change
   steps:
   - action: utter_askWeight
+  - slot_was_set:
+    - general: true
   - or:
     - intent: notSure
     - intent: affirm
@@ -568,8 +617,12 @@ stories:
 
 - story: weight increase
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askWeightIncOrDec
-  - intent: increase
+  - or:
+    - intent: weightGain
+    - intent: increase
   - action: utter_askWeightInc
   - intent: score
     entities:
@@ -579,6 +632,8 @@ stories:
 
 - story: weight decrease
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askWeightIncOrDec
   - intent: decrease
   - action: utter_askWeightDec
@@ -590,12 +645,16 @@ stories:
 
 - story: no appetite change
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askAppetite
   - intent: deny
   - action: action_scoreFinal
 
 - story: appetite change
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askAppetite
   - or:
     - intent: notSure
@@ -604,6 +663,8 @@ stories:
 
 - story: appetite increase
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askAppetiteIncOrDec
   - intent: increase
   - action: utter_askAppetiteInc
@@ -616,6 +677,8 @@ stories:
 
 - story: appetite decrease
   steps:
+  - slot_was_set:
+    - general: true
   - action: utter_askAppetiteIncOrDec
   - intent: decrease
   - action: utter_askAppetiteDec

@@ -35,6 +35,7 @@ policies:
     epochs: 5
   - name: UnexpecTEDIntentPolicy
     max_history: 5
+    tolerance: 0.05
     epochs: 100
   - name: TEDPolicy
     max_history: 5
