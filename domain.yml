@@ -1,11 +1,6 @@
 version: '3.1'
 
 actions:
-# Utterrances
-- utter_start
-- utter_howLongChange
-- utter_askSleep
-- utter_askSleepTrouble
 # Custom Actions
 - action_restart
 - action_start
@@ -78,11 +73,7 @@ intents:
 - mood_unhappy
 - start
 - score
-- tired
-- troubleSleep
 - notSure
-- noTroubleSleep
-- reasonActivity
 - check
 - general
 - increase
@@ -93,15 +84,44 @@ intents:
 - permission
 - noPermission
 - energyTired
-- sleepMore8
-- sleepLess8
-- sleepIrregular
 - pessimistic
 - optimistic
+- checklater
+##
+- lessWeek
+- moreWeek
+- week
 - weightChange
 - noWeightChange
 - weightGain
-- checklater
+- weightLoss
+- appetiteChange
+- noAppetiteChange
+- appetiteInc
+- appetiteDec
+- anxious
+- angry
+- notAngry
+- concentrate
+- cantConcentrate
+## SLEEP INTENTS
+- sleepMore8
+- sleepLess8
+- sleepIrregular
+- troubleSleep
+- noTroubleSleep
+- wakeEarly
+- dontWakeEarly
+- restlessSleep
+- normalSleep
+## ACTIVITY INTENTS
+- participateActivity
+- didntParticipateActivity
+- reasonActivity
+- enjoyNormal
+- interest
+- noInterest
+- energyTired
 
 responses:
 
@@ -335,8 +355,6 @@ responses:
   - text: Have you participated in any enjoyable activities this past week?
 
   utter_askActivityNo:
-  - text: Why?
-  - text: What is the reason?
   - text: Any particular reason why you haven't?
   - text: Why is that?
   - text: Why not?

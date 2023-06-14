@@ -106,6 +106,7 @@ nlu:
     - fine i guess
     - it's okay
     - alright
+    - it varies
 
 - intent: troubleSleep
   examples: |
@@ -120,6 +121,12 @@ nlu:
     - i wakeup
     - i have trouble sleeping
     - i wakeup alot
+    - i can't sleep
+    - i can't fall asleep
+    - i don't sleep
+    - i rarely sleep
+    - i have very little sleep
+    - i don't sleep alot
 
 - intent: noTroubleSleep
   examples: |
@@ -127,6 +134,59 @@ nlu:
     - no i don't have trouble
     - no trouble
     - all good
+    - i sleep fine
+    - no i havne't had any troube sleeping
+    - i fall asleep easily
+    - i don't have trouble sleeping
+    - i sleep easily
+    - my sleep is fine
+
+- intent: wakeEarly
+  examples: |
+    - i wake up before i need to 
+    - yes i always wakeup before my alarm
+    - i always wakeup before i need
+    - i always wakeup early
+    - yes i have found myself waking up earlier than necessary alot
+    - i wakeup earlier than usual
+    - yes i have found myself waking up earlier than usual
+
+- intent: dontWakeEarly
+  examples: |
+    - no i haven;t woken up early
+    - i wakeup on my alarm
+    - i wakeup like usual
+    - i don't wake up earlier than usual 
+    - no i wake in my normal time
+    - i wake on time
+    - no i haven't found myself waking up earlier than usual
+
+- intent: restlessSleep
+  examples: |
+    - i wake up alot in my sleep
+    - yes my seep is disturbed alot
+    - i sleep restlessly
+    - i have restless sleep
+    - i wakeup alot in the middle of my sleep
+    - i have alot of dreams that wake me
+    - i wake up on nightmares
+    - i can't have a restful sleep
+    - yes my sleep had been restless
+    - my sleep is disturbed most nights
+    - yes my sleep is restless 
+    - i have had restless sleep on some nights
+    - on some nights 
+
+- intent: normalSleep
+  examples: |
+    - no my sleep is not disturbed
+    - my sleep is normal
+    - no i don't wakeup in my sleep
+    - i don't have restless sleep
+    - my sleep is not disturbed
+    - i sleep normaly
+    - no my sleep hasn't been restless or disturbed
+    - no i haven't had any disturbed nights
 
 - intent: everythingFine
   examples: |
@@ -159,7 +219,7 @@ nlu:
     - a little bit less
     - no less than a week
     - it has been going on for less than a week
-    - no hasn'et been going on that long
+    - no hasn't been going on that long
 
 - intent: moreWeek
   examples: |
@@ -168,17 +228,6 @@ nlu:
     - yes more than
     - more yes
     - over a week
-
-- intent: 2weeks
-  examples: |
-    - approximately 2 weeks
-    - yes it has been going on for 2 weeks i think
-    - it has been happening for 2 weeks
-    - more like 2 weeks
-    - yes alot more
-    - yes for about 2 weeks
-    - about 2 weeks
-    - it has been happening for 2 weeks
 
 - intent: week
   examples: |
@@ -290,6 +339,10 @@ nlu:
     - on the contrary
     - quite the opposite
     - no opposite of that
+    - no as usual
+    - as usual
+    - the same
+    - not at all
 
 - intent: notSure
   examples: |
@@ -308,6 +361,32 @@ nlu:
     - i have no clue
     - Can't say for sure.
     - Unsure.
+
+- intent: participateActivity
+  examples: |
+    - yes i had fun
+    - i participated in 
+    - i went out with my friends
+    - i went on vacation with my friends
+    - yes i have i went out
+    - yes i went out with friends
+    - i did a crazy activity
+    - i did go out
+    - i enjoyed the weekend
+    - i enjoyed alot of activities
+    - yes i have participated in an enjoyable activity this week
+
+- intent: didntParticipateActivity
+  examples: |
+    - no i haven't gone out
+    - no i didn't want to do anything
+    - no i haven't done anything
+    - i didn't get out of the house
+    - no i didn't enjoy anything
+    - i didn't go out this entire week
+    - no i had no time to do anything
+    - no i didn't enjoy any activity
+    - no i haven't participated in any enjoyable activity this week
 
 - intent: reasonActivity
   examples: |
@@ -335,7 +414,81 @@ nlu:
     - i didn't have time to do anything
     - i have exams
     - i had alot on my plate
-    
+    - i don't want to do anything
+    - i was busy most of the time
+    - i didn't find time to do anything
+    - i don't enjoy going out
+    - i had no energy to do any activity
+
+- intent: enjoyNormal
+  examples: |
+    - there was no change i enjoyed it fine
+    - i enjoyed it fine
+    - no i had fun just like always
+    - i enjoyed it just like i always do
+    - no i enjoyed it like i normally do
+    - i enjoyed it like i usualy do
+
+# - intent: didntEnjoy
+#   examples: |
+#     - i didn't enjoy anything i did
+
+- intent: interest
+  examples: |
+    - no i haven't noticed any change in my motivation or interest in doing my daily activities
+    - there is no change in my level of interest or motivation
+    - no i haven't noticed any change in my interest
+
+- intent: noInterest
+  examples: |
+    - i have no interest i doing my daily activities
+    - i have no interest in completing my chores
+    - yes i don't want to do anything that i used to do before
+    - yes my level of interest in non existent
+    - yes i have noticed a significant decrease in my level of interest lately
+    - my level of interest in doing things is declining
+    - i have no motivation to do anything
+    - i have no motivation or interest in doing my daily activities
+    - yes i have noticed a steep decline in my interest and motivation
+
+- intent: energyTired
+  examples: |
+    - yes feeling tired
+    - yes feeling bad
+    - tired
+    - exhausted
+    - yes i feel exhausted
+    - i have been extremely exhausted this past week
+    - yes i have noticed a change in my energy this past week
+    - yes i am always tires
+    - my energy is drained
+    - i have no energy
+    - i am tired constantly
+    - yes i have been feeling ecxtremely tired
+    - yes i was very tired this past week
+    - yes i have my energy level is decreasing
+    - yes i have my energy is being drained
+    - yes i have steep decline in my enegry
+
+# - intent: energyGood
+#   examples: |
+
+
+# - intent: weightedDown
+#   examples: |
+
+
+# - intent: notWeightedDown
+#   examples: |
+
+
+# - intent: interferes
+#   examples: |
+
+
+# - intent: doesntInterfere
+#   examples: |
+
 - intent: mood_great
   examples: |
     - perfect
@@ -439,15 +592,6 @@ nlu:
     - my mood is bad
     - feeling very low
 
-- intent: energyTired
-  examples: |
-    - yes feeling tired
-    - yes feeling bad
-    - tired
-    - exhausted
-    - yes i feel exhausted
-    - yes i feel 
-
 - intent: increase
   examples: |
     - it increased
@@ -518,7 +662,6 @@ nlu:
 - intent: sleepLess8
   examples: |
     - My sleep habits have been affected by stress or other external factors.
-    - no less
     - i slept less
     - No, I have not been sleeping more than 8 hours a night, including naps.
     - I struggle to get enough sleep, often sleeping less than 8 hours.
@@ -644,15 +787,128 @@ nlu:
     - put off some
     - lost
 
-# - intent: appetiteChange
+- intent: appetiteChange
+  examples: |
+    - i have noticed a change in my appetite 
+    - my appetite has been fluctuating
+    - my appetite is not stable
+    - i have noticed a change in my appetite
+  
+- intent: noAppetiteChange
+  examples: |
+    - no i eat normally
+    - my appetite is normal
+    - no change from usual
+    - no i eat the same
+    - no appetite change
+    - no my apetite is stable
+    - my appetite stayed the same
+    - same appetite 
+    - i haven't noticed any change in my appetite
+    - i haven't noticed any change in my appetite these past 2 weeks
+
+- intent: appetiteInc
+  examples: |
+    - i have been eating alot
+    - i have been eating more than usual
+    - my appetite increased
+    - i eat alot
+    - i eat more
+    - my appetite increased slightly
+    - i did notice an increase in my appetite
+    - i eat a little more
+    - eat alot more
+    - i crave food more than usual
+    - i ate more
+    - i am always eating
+
+- intent: appetiteDec
+  examples: |
+    - i eat less
+    - i eat alot less
+    - i don't eat 
+    - i don't eat at all
+    - i rarely eat
+    - don't eat
+    - i did notice a decrease in my appetite
+    - i did have a noticable decrease in my appetite
+    - i didn't eat much these past weeks
+    - i don't have a meal schedule
+
+- intent: anxious
+  examples: |
+    - i have been feeling anxious
+    - anxious and nervous
+    - anxious and on edge
+    - nervous and on edge
+    - on edge
+    - anxious
+    - nervous
+    - i have been feeling all of those
+    - i have been feeling extremely anxious
+    - always on edge
+    - i have been feeling on edge
+    - i have been feeling nervous
+    - anxious more than usual
+    - always nervous
+
+# - intent: notAnxious
+#   examples: |
+
+- intent: angry
+  examples: |
+    - i am angry all the time
+    - always angry
+    - feeling specially irritable this past week
+    - i get angry easily
+    - i always get angry
+    - i am extremely irritable
+    - everything gets on my nerves
+    - i get riled up easily
+
+- intent: notAngry
+  examples: |
+    - i rarely get angry
+    - i remain calm
+    - i try to remain calm
+    - i don't get angry easily
+    - i don't get riled up
+    - i am a fairly calm person
+
+# - intent: slowedDown
 #   examples: |
 
 
-# - intent: appetiteInc
+# - intent: notSlowedDown
 #   examples: |
 
 
-# - intent: appetiteDec
-#   examples: |
+- intent: cantConcentrate
+  examples: |
+    - i can barely concentrate
+    - yes i haven't been able to concentrate at all
+    - i lose track of my concentration easily
+    - i have had trouble concentrating lately
+    - i have not been able to make decisions
+    - i can't make decisions
+    - i can't concentrate
+    - yes i have had trouble concentrating
+    - yes i have had trouble making decisions
+    - i lose track of what i'm doing
+    - i always get distracted
+    - i lose focus easily
+    - i can't focus on what i'm doing
+    - it is hard to focus
+    - it has been hard for me to focus 
+    - it has been hard to concetrate 
+    - trouble concentrating
+    - trouble making decisions
 
-
+- intent: concentrate
+  examples: |
+    - i can concentrate fine
+    - i easily make decisions
+    - i have had no trouble concentrating or making decisions this past week
+    - i have had no trouble concentraing
+    - i have no trouble focusing on what i'm doing
+    - i have no trouble making decisions

@@ -113,7 +113,9 @@ stories:
   - slot_was_set:
     - sleep: true
   - action: utter_howLongChange
-  - intent: deny
+  - or:
+    - intent: lessWeek
+    - intent: deny
   - action: utter_askSleep
 
 - story: more than week sleep
@@ -124,10 +126,22 @@ stories:
   - or:
     - intent: affirm
     - intent: notSure
+    - intent: moreWeek
   - action: utter_howLong
   - intent: score
     entities:
       - value: 1  
+  - action: action_scoreAdd
+  - action: utter_askSleep
+
+- story: week sleep
+  steps:
+  - slot_was_set:
+    - sleep: true
+  - action: utter_howLongChange
+  - intent: week
+    entities:
+      - value: 1 
   - action: action_scoreAdd
   - action: utter_askSleep
 
@@ -155,15 +169,6 @@ stories:
   - or:
     - intent: deny
     - intent: sleepLess8
-  - action: utter_askSleepTrouble
-
-- story: sleeps 8 hours or less
-  steps:
-  - slot_was_set:
-    - sleep: true
-  - action: utter_askSleep
-  - or:
-    - intent: deny
     - intent: sleepIrregular
   - action: utter_askSleepTrouble
 
@@ -200,7 +205,9 @@ stories:
   - slot_was_set:
     - sleep: true
   - action: utter_askWakeupEarly
-  - intent: deny
+  - or:
+    - intent: dontWakeEarly
+    - intent: deny
   - action: utter_askSleepWakeup
 
 - story: wakeup early
@@ -211,6 +218,7 @@ stories:
   - or:
     - intent: notSure
     - intent: affirm
+    - intent: wakeEarly
   - action: utter_askMorningIns
   - intent: score
     entities:
@@ -227,6 +235,7 @@ stories:
     - intent: troubleSleep
     - intent: affirm 
     - intent: notSure
+    - intent: restlessSleep
   - action: utter_askMidIns
   - intent: score
     entities:
@@ -243,6 +252,7 @@ stories:
   - or:
     - intent: noTroubleSleep
     - intent: deny 
+    - intent: normalSleep
   - action: action_scoreCheck
   - checkpoint: scoreCheck
 
@@ -266,6 +276,7 @@ stories:
   - or:
     - intent: affirm
     - intent: notSure
+    - intent: moreWeek
   - action: utter_howLong
   - intent: score
     entities:
@@ -278,7 +289,9 @@ stories:
   - slot_was_set:
     - sleep: false
   - action: utter_howLongChange
-  - intent: deny
+  - or:
+    - intent: lessWeek
+    - intent: deny
   - action: utter_askActivity
 
 - story: has activity
@@ -286,7 +299,9 @@ stories:
   - slot_was_set:
     - sleep: false
   - action: utter_askActivity
-  - intent: affirm 
+  - or:
+    - intent: participateActivity
+    - intent: affirm 
   - action: utter_askActivityEnjoy
 
 - story: enjoy activity usual
@@ -294,7 +309,9 @@ stories:
   - slot_was_set:
     - sleep: false
   - action: utter_askActivityEnjoy
-  - intent: deny
+  - or:
+    - intent: enjoyNormal
+    - intent: deny
   - action: utter_askInterest
 
 - story: enjoy activity less than usual
@@ -317,19 +334,23 @@ stories:
   - slot_was_set:
     - sleep: false
   - action: utter_askActivity
-  - intent: deny 
+  - or:
+    - intent: didntParticipateActivity
+    - intent: deny 
   - action: utter_askActivityNo
   - or:
     - intent: reasonActivity
     - intent: notSure
   - action: utter_askInterest
 
-- story: has interest
+- story: has no interest
   steps:
   - slot_was_set:
     - sleep: false
   - action: utter_askInterest
-  - intent: affirm
+  - or:
+    - intent: noInterest
+    - intent: affirm
   - action: utter_askInterestLevel
   - intent: score
     entities:
@@ -337,12 +358,14 @@ stories:
   - action: action_scoreAdd
   - action: utter_askEnergy
 
-- story: has no interest
+- story: has interest
   steps:
   - slot_was_set:
     - sleep: false
   - action: utter_askInterest
-  - intent: deny
+  - or:
+    - intent: interest
+    - intent: deny
   - action: utter_askEnergy
 
 - story: energy change
@@ -353,6 +376,7 @@ stories:
   - or:
     - intent: affirm
     - intent: notSure
+    - intent: energyTired
   - action: utter_askTired
   - intent: score
     entities:
@@ -478,6 +502,7 @@ stories:
   - or:
     - intent: affirm
     - intent: notSure
+    - intent: anxious
   - action: utter_askAnxiousTime
   - intent: score
     entities:
@@ -499,6 +524,7 @@ stories:
     - general: true
   - action: utter_askIrritable
   - or:
+    - intent: angry
     - intent: affirm
     - intent: notSure
   - action: utter_askIrritableTime
@@ -513,7 +539,9 @@ stories:
   - slot_was_set:
     - general: true
   - action: utter_askIrritable
-  - intent: deny
+  - or:
+    - intent: notAngry
+    - intent: deny
   - action: utter_askSlowedDown
 
 - story: is not slowed down
@@ -529,7 +557,9 @@ stories:
   - slot_was_set:
     - general: true
   - action: utter_askConcentration
-  - intent: deny
+  - or:
+    - intent: concentrate
+    - intent: deny
   - action: utter_askFuture
 
 - story: cannot concentrate
@@ -540,6 +570,7 @@ stories:
   - or:
     - intent: affirm
     - intent: notSure
+    - intent: cantConcentrate
   - action: utter_askConcentrationTrouble
   - intent: score
     entities:
@@ -615,6 +646,36 @@ stories:
     - intent: weightChange
   - action: utter_askWeightIncOrDec
 
+- story: gained weight
+  steps:
+  - action: utter_askWeight
+  - slot_was_set:
+    - general: true
+  - or:
+    - intent: increase
+    - intent: weightGain
+  - action: utter_askWeightInc
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd 
+  - action: utter_askAppetite
+
+- story: lost weight
+  steps:
+  - action: utter_askWeight
+  - slot_was_set:
+    - general: true
+  - or:
+    - intent: decrease
+    - intent: weightLoss
+  - action: utter_askWeightDec
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd 
+  - action: utter_askAppetite
+
 - story: weight increase
   steps:
   - slot_was_set:
@@ -635,7 +696,9 @@ stories:
   - slot_was_set:
     - general: true
   - action: utter_askWeightIncOrDec
-  - intent: decrease
+  - or:
+    - intent: weightLoss
+    - intent: decrease
   - action: utter_askWeightDec
   - intent: score
     entities:
@@ -648,7 +711,9 @@ stories:
   - slot_was_set:
     - general: true
   - action: utter_askAppetite
-  - intent: deny
+  - or:
+    - intent: noAppetiteChange
+    - intent: deny
   - action: action_scoreFinal
 
 - story: appetite change
@@ -659,14 +724,49 @@ stories:
   - or:
     - intent: notSure
     - intent: affirm
+    - intent: appetiteChange
   - action: utter_askAppetiteIncOrDec
+
+- story: gained appetite
+  steps:
+  - slot_was_set:
+    - general: true
+  - action: utter_askAppetite
+  - or:
+    - intent: increase
+    - intent: appetiteInc
+  - action: utter_askAppetiteInc
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd 
+  - action: action_scoreFinal
+  - checkpoint: finalScore
+
+- story: lost appetite
+  steps:
+  - slot_was_set:
+    - general: true
+  - action: utter_askAppetite
+  - or:
+    - intent: decrease
+    - intent: appetiteDec
+  - action: utter_askAppetiteDec
+  - intent: score
+    entities:
+      - value: 1  
+  - action: action_scoreAdd 
+  - action: action_scoreFinal
+  - checkpoint: finalScore
 
 - story: appetite increase
   steps:
   - slot_was_set:
     - general: true
   - action: utter_askAppetiteIncOrDec
-  - intent: increase
+  - or: 
+    - intent: appetiteInc
+    - intent: increase
   - action: utter_askAppetiteInc
   - intent: score
     entities:
@@ -680,7 +780,9 @@ stories:
   - slot_was_set:
     - general: true
   - action: utter_askAppetiteIncOrDec
-  - intent: decrease
+  - or:
+    - intent: appetiteDec
+    - intent: decrease
   - action: utter_askAppetiteDec
   - intent: score
     entities:

@@ -184,7 +184,7 @@ class ActionInitiateConversation(Action):
 
         name = fetchDoc(user_id).get("name")
         change = fetchDoc(user_id).get("change")
-        message = "Hello " + name +"!" +"\n I noticed there was a change in your " + change + " is everything okay?"
+        message = "Hello {name}!" +"\n I noticed there was a change in your " + change + " is everything okay?"
 
         url = f"https://graph.facebook.com/v13.0/me/messages?access_token={access_token}"
         headers = {"Content-Type": "application/json"}
