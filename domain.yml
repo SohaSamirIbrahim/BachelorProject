@@ -15,6 +15,7 @@ actions:
 - action_default_fallback
 - action_initiate_conversation
 - action_saveUser
+- action_test
 # - action_unlikely_intent
 
 entities:
@@ -116,7 +117,7 @@ responses:
   - text: By answering a few questions, you'll contribute to a more accurate understanding of your situation, allowing us to provide personalized support. Your participation can make a difference and lead to valuable insights. Will you please take a few moments to answer these questions?
 
   utter_badChange:
-  - text: I'm really sorry to hear that. I'm here to help, but I may need to ask you some questions to provide the best support. Would that be alright?
+  - text: I'm really sorry to hear that. I'm here to help, but I may need to ask you some questions to provide the best support. It will only take 5 minutes of your time. Would that be alright?
   
   utter_goodChange:
   - text: Good to hear this!
@@ -129,13 +130,13 @@ responses:
 
   # GENERAL
   utter_howLongChange:
-  - text: Has this been happening for more than a week?
+  - text: Has this been happening for a week or more?
 
   utter_howLong:
   - text: Approximately how long has this been happening?
     buttons:
-    - title: A week
-      payload: /score{{"value":1}}
+    # - title: A week
+    #   payload: /score{{"value":1}}
     - title: 2 weeks
       payload: /score{{"value":2}}
     - title: More than 2 weeks

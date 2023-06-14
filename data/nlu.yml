@@ -94,7 +94,6 @@ nlu:
     - i do feel like that
     - felt it yes
     - happens yes
-    - yes it does interfere
     - yes i have noticed a change
     - yes it changed the last week
     - there was a change yes
@@ -103,6 +102,10 @@ nlu:
     - yes it has changed
     - yes it has
     - okay
+    - okay fine
+    - fine i guess
+    - it's okay
+    - alright
 
 - intent: troubleSleep
   examples: |
@@ -135,6 +138,13 @@ nlu:
     - superb
     - nothing going on all good
     - yes everything is good
+    - everything is perfect
+    - yes all is good iwas just busy
+    - everything is okay i had work
+    - i was on vacation
+    - i had time off
+    - yeah all is going good
+    - all is going well
 
 - intent: everythingNotFine
   examples: |
@@ -142,6 +152,41 @@ nlu:
     - not good
     - i am not good
     - everything is not okay
+    - life is not good
+  
+- intent: lessWeek
+  examples: |
+    - a little bit less
+    - no less than a week
+    - it has been going on for less than a week
+    - no hasn'et been going on that long
+
+- intent: moreWeek
+  examples: |
+    - a little bit over a week
+    - it has been going on more than a week
+    - yes more than
+    - more yes
+    - over a week
+
+- intent: 2weeks
+  examples: |
+    - approximately 2 weeks
+    - yes it has been going on for 2 weeks i think
+    - it has been happening for 2 weeks
+    - more like 2 weeks
+    - yes alot more
+    - yes for about 2 weeks
+    - about 2 weeks
+    - it has been happening for 2 weeks
+
+- intent: week
+  examples: |
+    - a week
+    - happening for a week yes
+    - for a week only
+    - approximately a week
+    - has been happening for only a week not more
 
 - intent: permission
   examples: |
@@ -165,6 +210,11 @@ nlu:
     - yes i would 
     - yes i would be okay with that
     - i guess
+    - fine i will answer your questions
+    - okay i will answer the questions
+    - go ahead and ask
+    - yes it would be alright 
+    - as long as its only 5 minutes
 
 - intent: noPermission
   examples: |
@@ -189,6 +239,8 @@ nlu:
     - no it wouldn't be okay
     - i don't like questions
     - i hate questions
+    - no i will not answer questions
+    - another time
 
 - intent: deny
   examples: |
@@ -233,7 +285,11 @@ nlu:
     - no it didn't change
     - it didn't
     - didn't occur 
-    - not it is not okay   
+    - not it is not okay
+    - no less
+    - on the contrary
+    - quite the opposite
+    - no opposite of that
 
 - intent: notSure
   examples: |
@@ -275,6 +331,10 @@ nlu:
     - not enough time
     - always busy
     - alot of work
+    - i had work to do
+    - i didn't have time to do anything
+    - i have exams
+    - i had alot on my plate
     
 - intent: mood_great
   examples: |
@@ -365,6 +425,19 @@ nlu:
     - Rough day emotionally
     - A bit downhearted
     - down and sad alot
+    - sad and down
+    - a little bit sad
+    - a little bit down
+    - abit sad
+    - always sad
+    - i have been feeling very sad and down
+    - extremely sad
+    - extremely down
+    - crying
+    - i want to cry
+    - not in a good mood
+    - my mood is bad
+    - feeling very low
 
 - intent: energyTired
   examples: |
@@ -380,25 +453,23 @@ nlu:
     - it increased
     - became higher
     - increased
-    - gained
-    - fatter
-    - gained some  
     - bigger
-    - bigger apetite
-    - eat more
+    - increase slightly
+    - a little increase
+    - increased a little
+    - higher
+    - more
 
 - intent: decrease
   examples: |
     - decreased
     - it decreased
-    - i lost weight
-    - thinner
-    - lost some
     - became less
     - smaller
-    - eat less
-    - less appetite
-    
+    - slight decrease
+    - decreased a little
+    - a little lower
+    - a little less
 
 - intent: bot_challenge
   examples: |
@@ -476,6 +547,10 @@ nlu:
     - It's a mix of emotions—I can't quite pinpoint if it's pessimism or just a passing mood.
     - sometimes i am cometimes i'm not
     - Sometimes I lean towards pessimism, but I try to maintain a balanced perspective
+    - i see no hope in future
+    - the future looks very bad
+    - yes the future is not good
+    - i have been feeling a little pessmistic
 
 - intent: optimistic
   examples: |
@@ -494,6 +569,9 @@ nlu:
     - no i'm optimistic
     - i'm optimistic
     - optimistic
+    - no the future looks good
+    - i always look on the bright side
+    - i have been feeling optimistic
 
 - intent: weightChange
   examples: |
@@ -539,4 +617,42 @@ nlu:
     - gained some
     - put on some more
     - put on weight
+    - i put on some fat
+    - i became fat
+    - i gained some wight
+    - slighlty gained some
+    - gained some
+
+- intent: weightLoss
+  examples: |
+    - i lost weight
+    - my weight decreased
+    - i lost some weight
+    - i have lost some weight
+    - i did become thin
+    - i became thinner
+    - thinner
+    - thin
+    - slight decrease
+    - slight loss
+    - slight weight loss
+    - i lost a little weight
+    - i did have a noticable decrease in my weight
+    - i lost some weight in the past week
+    - lost some
+    - put off some weight
+    - put off some
+    - lost
+
+# - intent: appetiteChange
+#   examples: |
+
+
+# - intent: appetiteInc
+#   examples: |
+
+
+# - intent: appetiteDec
+#   examples: |
+
 

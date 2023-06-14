@@ -40,6 +40,10 @@ rules:
   - intent: nlu_fallback
   - action: action_default_fallback
 
+- rule: check
+  steps:
+  - intent: check
+  - action: action_test
 # - rule: therapy bot
 #   steps: 
 #   - intent: therapy

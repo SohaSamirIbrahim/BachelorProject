@@ -19,6 +19,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from datetime import date
+from datetime import datetime
+
 import requests
 
 
@@ -40,6 +43,57 @@ def updateDoc(senderid, field, value):
     db = firestore.client()
     doc_ref = db.collection("test").document(senderid)
     doc_ref.update({field: value})
+
+class ActionTest(Action):
+    def name(self) -> Text:
+        return "action_test"
+
+    def run(self, dispatcher: CollectingDispatcher, 
+            tracker: Tracker, 
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        db = firestore.client()
+        collection_ref = db.collection('test')
+
+        # UPDATE SCORE
+        # doc_ref = db.collection("test").document("12223").get()
+        # data = doc_ref.to_dict()
+        # score = data.get("anomalies").get("06/13/2023").get("score")
+        # db.collection("test").document("Soha").set({"anomalies": {"06/13/2023": {"score": score+1}}}, merge=True)
+
+        # FETCHING SCORE
+        # doc_ref = db.collection("test").document("12223").get()
+        # data = doc_ref.to_dict()
+        # score = data.get("anomalies").get("06/13/2023").get("score")
+
+        # ADDING NEW ANOMALY
+        # doc_ref = db.collection("test").document("12223").set(
+        #     {"anomalies": {
+        #         "05/15/2023":{
+        #             "change" : "activity",
+        #             "score": 15
+        #         }
+        #     }  }, merge= True
+        # )
+
+
+        # ADDING NEW DOC
+        # doc_ref = collection_ref.document("12223")
+        # date = datetime.now()
+        # dateString = date.strftime("%m/%d/%Y")
+        # doc = {
+        #     'name': "Soha",
+        #     'anomalies': {
+        #         dateString:{
+        #             "change": "sleep",
+        #             "score": 0
+        #         }
+        #     }
+        # }
+        # doc_ref.set(doc)
+
+        return[]
+
 
 class ActionRestart(Action):
 
