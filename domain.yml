@@ -30,6 +30,7 @@ slots:
     influence_conversation: True
     mappings:
     - type: custom
+      action: action_start
 
   change:
     type: categorical
@@ -83,11 +84,9 @@ intents:
 - everythingNotFine
 - permission
 - noPermission
-- energyTired
 - pessimistic
 - optimistic
 - checklater
-##
 - lessWeek
 - moreWeek
 - week
@@ -104,7 +103,6 @@ intents:
 - notAngry
 - concentrate
 - cantConcentrate
-## SLEEP INTENTS
 - sleepMore8
 - sleepLess8
 - sleepIrregular
@@ -114,7 +112,6 @@ intents:
 - dontWakeEarly
 - restlessSleep
 - normalSleep
-## ACTIVITY INTENTS
 - participateActivity
 - didntParticipateActivity
 - reasonActivity
