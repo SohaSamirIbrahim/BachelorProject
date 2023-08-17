@@ -140,6 +140,9 @@ nlu:
     - i don't have trouble sleeping
     - i sleep easily
     - my sleep is fine
+    - i sleep like a baby
+    - i sleep great
+    - i have a good sleep
 
 - intent: wakeEarly
   examples: |
@@ -160,6 +163,9 @@ nlu:
     - no i wake in my normal time
     - i wake on time
     - no i haven't found myself waking up earlier than usual
+    - i wakeup on time as usual
+    - i wakeup on time
+    - no i wakeup on time normally
 
 - intent: restlessSleep
   examples: |

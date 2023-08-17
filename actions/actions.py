@@ -296,7 +296,7 @@ class ActionScoreCheck(Action):
                     "confidence": 1.0,
                     }
                 }
-                return [ActionExecuted("action_listen"),UserUttered(text="/checklater", parse_data=dataParse),ConversationPaused()]
+                return [ActionExecuted("action_listen"),UserUttered(text="/checklater", parse_data=dataParse)]
         else:
             dispatcher.utter_message("Error")
         
